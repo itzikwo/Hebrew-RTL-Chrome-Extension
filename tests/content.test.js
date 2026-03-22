@@ -1,5 +1,5 @@
 /** @jest-environment jsdom */
-import { applyDirection, processElement } from '../content.js';
+import { applyDirection, processElement } from '../lib/rtl-engine.js';
 
 describe('applyDirection — ENG-02: inline style application', () => {
   test('rtl sets direction:rtl and text-align:right as inline styles', () => {

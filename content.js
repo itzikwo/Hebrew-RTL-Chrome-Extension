@@ -56,8 +56,8 @@ function _getFirstSubstantiveText(el) {
 
 // ---- Phase 1: Core RTL engine ----
 
-export const MARKER = 'data-hrtl-processed';
-export const DEBOUNCE_MS = 100;
+const MARKER = 'data-hrtl-processed';
+const DEBOUNCE_MS = 100;
 
 /**
  * Apply or clear RTL/LTR inline styles on an element.
@@ -70,7 +70,7 @@ export const DEBOUNCE_MS = 100;
  * @param {Element} el
  * @param {'rtl'|'ltr'} dir
  */
-export function applyDirection(el, dir) {
+function applyDirection(el, dir) {
   if (dir === 'rtl') {
     el.style.direction = 'rtl';
     el.style.textAlign = 'right';
@@ -96,7 +96,7 @@ export function applyDirection(el, dir) {
  * @param {Element} el
  * @param {{ forceRTL?: boolean } | null} selectorConfig
  */
-export function processElement(el, selectorConfig) {
+function processElement(el, selectorConfig) {
   if (selectorConfig?.forceRTL) {
     applyDirection(el, 'rtl');
     return;
@@ -113,7 +113,7 @@ let _observer = null;
 let _debounceTimer = null;
 const _pendingNodes = new Set();
 
-export function startObserver(_selectors, selectorConfig) {
+function startObserver(_selectors, selectorConfig) {
   if (_observer) {
     _observer.disconnect();
     _observer = null;
@@ -161,7 +161,7 @@ export function startObserver(_selectors, selectorConfig) {
   });
 }
 
-export function stopObserver() {
+function stopObserver() {
   clearTimeout(_debounceTimer);
   _pendingNodes.clear();
   if (_observer) {

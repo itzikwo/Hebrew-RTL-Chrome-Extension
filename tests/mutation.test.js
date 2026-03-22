@@ -1,6 +1,6 @@
 /** @jest-environment jsdom */
 import { jest } from '@jest/globals';
-import { startObserver, stopObserver } from '../content.js';
+import { startObserver, stopObserver } from '../lib/rtl-engine.js';
 
 // MutationObserver callbacks are microtasks — flush them before advancing fake timers.
 const flushMicrotasks = () => Promise.resolve();

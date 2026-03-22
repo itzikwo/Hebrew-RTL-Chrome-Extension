@@ -28,7 +28,7 @@ export const DEFAULT_DOMAINS = {
     selectors: [
       {
         id: 'claude_response',
-        selector: '.font-claude-message',
+        selector: 'p.font-claude-response-body',
         enabled: true,
         forceRTL: false
       },

@@ -42,8 +42,8 @@
 
 ### Keyboard Shortcuts
 
-- [ ] **KBD-01**: Extension registers a default keyboard shortcut (Ctrl+Shift+H / MacCtrl+Shift+H) to toggle the master switch for the current domain (FR-300)
-- [ ] **KBD-02**: Extension allows the user to customize the keyboard shortcut via Chrome's extension keyboard shortcut settings (FR-301)
+- [x] **KBD-01**: Extension registers a default keyboard shortcut (Ctrl+Shift+H / MacCtrl+Shift+H) to toggle the master switch for the current domain (FR-300)
+- [x] **KBD-02**: Extension allows the user to customize the keyboard shortcut via Chrome's extension keyboard shortcut settings (FR-301)
 
 ---
 
@@ -117,8 +117,8 @@
 | POP-03 | Phase 3 | Pending |
 | POP-04 | Phase 3 | Pending |
 | POP-05 | Phase 3 | Pending |
-| KBD-01 | Phase 2 | Pending |
-| KBD-02 | Phase 2 | Pending |
+| KBD-01 | Phase 2 | Complete |
+| KBD-02 | Phase 2 | Complete |
 
 **Coverage:**
 - v1 requirements: 23 total

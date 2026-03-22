@@ -38,7 +38,7 @@ Declared values (multiples of 4):
 |-------|-------|-------|
 | xs | 4px | Gap between checkbox and selector text; gap between row buttons |
 | sm | 8px | Internal padding for selector rows; gap between header elements |
-| md | 12px | Popup body padding (all four sides) |
+| md | 8px | Popup body padding (all four sides) |
 | lg | 16px | Section separation between header, selector list, and footer |
 | xl | 24px | Confirm dialog internal padding |
 
@@ -46,7 +46,6 @@ Exceptions:
 - Popup body width: 280px (fixed — locked in CONTEXT.md; set on `body { width: 280px }`)
 - Touch/click targets for buttons: minimum 28px height (Delete ✕ button, checkbox)
 - Confirm dialog buttons: minimum 32px height for clear tap affordance
-- **`md: 12px` justification:** The popup canvas is 280px wide. Using 16px body padding would leave only 248px of usable content width, making truncated selector text harder to read. 8px would feel cramped against the border. 12px is the deliberate midpoint that preserves readability within the constrained popup width. It is a multiple of 4 and is consciously preferred over both 8px and 16px for this specific layout.
 
 Source: CONTEXT.md (width: ~280px), defaults for all other values.
 
@@ -191,7 +190,7 @@ Popup fixed width: 280px. Height: auto (scrollable selector list if needed).
 
 ```
 ┌─────────────────────────────────┐  ← 280px wide
-│  chatgpt.com          [toggle]  │  ← header (12px padding, 14px semibold domain name)
+│  chatgpt.com          [toggle]  │  ← header (8px padding, 14px semibold domain name)
 ├─────────────────────────────────┤
 │  .message-box  [✓] [✕]          │  ← selector row (13px text, truncated)
 │  .reply-box    [✓] [✕]          │

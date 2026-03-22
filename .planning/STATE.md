@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: in_progress
-stopped_at: "Completed 02-02-PLAN.md — storage abstraction layer, 7 tests green"
-last_updated: "2026-03-22"
-last_activity: "2026-03-22 — Phase 2 plan 02 complete: lib/storage.js with sync-to-local fallback, 7 tests green"
+stopped_at: Completed 02-03-PLAN.md — background service worker, 8 tests green
+last_updated: "2026-03-22T14:39:55.210Z"
+last_activity: "2026-03-22 — Phase 2 plan 03 complete: background service worker, 8 tests green"
 progress:
   total_phases: 4
   completed_phases: 1
   total_plans: 9
-  completed_plans: 7
-  percent: 43
+  completed_plans: 8
+  percent: 89
 ---
 
 # Project State
@@ -26,11 +26,11 @@ See: .planning/PROJECT.md (updated 2026-03-22)
 ## Current Position
 
 Phase: 2 of 4 (Extension Wiring and Pre-configured Sites)
-Plan: 3 of 5 in current phase (02-00, 02-01, and 02-02 complete)
+Plan: 4 of 5 in current phase (02-00, 02-01, 02-02, and 02-03 complete)
 Status: in_progress
-Last activity: 2026-03-22 — Phase 2 plan 02 complete: storage abstraction with sync-to-local fallback, 7 tests green
+Last activity: 2026-03-22 — Phase 2 plan 03 complete: background service worker, 8 tests green
 
-Progress: [████░░░░░░] 43%
+Progress: [█████████░] 89%
 
 ## Performance Metrics
 
@@ -50,6 +50,8 @@ Progress: [████░░░░░░] 43%
 - Trend: on track
 
 *Updated after each plan completion*
+
+| Phase 02-03 P03 | 8 min | 1 task | 3 files |
 
 ## Accumulated Context
 
@@ -74,6 +76,8 @@ Recent decisions affecting current work:
 - [Phase 2, plan 02]: null (not undefined) returned when no domain config found — explicit null sentinel
 - [Phase 2, plan 02]: setDomainConfig catches all errors from sync.set (not just QUOTA_BYTES) — simpler and more resilient
 - [Phase 2, plan 02]: getAllConfigs filters to domain-prefixed keys only (startsWith 'domains.') — excludes unrelated storage
+- [Phase 02-03]: Handler extraction to lib/background-handlers.js — avoids Jest ESM caching issues with top-level service worker listener registration
+- [Phase 02-03]: handleInstalled receives defaultDomains as parameter — enables clean mocking without jest.unstable_mockModule cache-busting complexity
 
 ### Roadmap Evolution
 
@@ -91,6 +95,6 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-03-22
-Stopped at: Completed 02-02-PLAN.md — storage abstraction layer, 7 tests green
-Resume file: .planning/phases/02-extension-wiring-and-pre-configured-sites/02-03-PLAN.md
+Last session: 2026-03-22T14:39:55.208Z
+Stopped at: Completed 02-03-PLAN.md — background service worker, 8 tests green
+Resume file: None

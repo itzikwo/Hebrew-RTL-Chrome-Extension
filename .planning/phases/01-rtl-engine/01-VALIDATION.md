@@ -45,7 +45,7 @@ created: 2026-03-22
 | 1-02-02 | 01-02 | 1 | ENG-04 | unit | `npm test -- --testPathPattern=content` | ❌ W0 | ⬜ pending |
 | 1-02-03 | 01-02 | 1 | ENG-06 | unit | `npm test -- --testPathPattern=content` | ❌ W0 | ⬜ pending |
 | 1-02-04 | 01-02 | 1 | ENG-07 | unit | `npm test -- --testPathPattern=content` | ❌ W0 | ⬜ pending |
-| 1-03-01 | 01-03 | 1 | ENG-05 | unit | `npm test -- --testPathPattern=mutation` | ❌ W0 | ⬜ pending |
+| 1-03-01 | 01-03 | 2 | ENG-05 | unit | `npm test -- --testPathPattern=mutation` | ❌ W0 | ⬜ pending |
 
 *Status: ⬜ pending · ✅ green · ❌ red · ⚠️ flaky*
 

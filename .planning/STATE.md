@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: in_progress
-stopped_at: Completed 02-03-PLAN.md — background service worker, 8 tests green
-last_updated: "2026-03-22T14:39:55.210Z"
-last_activity: "2026-03-22 — Phase 2 plan 03 complete: background service worker, 8 tests green"
+stopped_at: Completed 02-04-PLAN.md — default-sites config + content.js storage wiring, 60 tests green
+last_updated: "2026-03-22T14:40:30Z"
+last_activity: "2026-03-22 — Phase 2 plan 04 complete: DEFAULT_DOMAINS for 5 platforms, content.js wired to chrome.storage, 60 tests green"
 progress:
   total_phases: 4
   completed_phases: 1
   total_plans: 9
-  completed_plans: 8
-  percent: 89
+  completed_plans: 9
+  percent: 100
 ---
 
 # Project State
@@ -26,11 +26,11 @@ See: .planning/PROJECT.md (updated 2026-03-22)
 ## Current Position
 
 Phase: 2 of 4 (Extension Wiring and Pre-configured Sites)
-Plan: 4 of 5 in current phase (02-00, 02-01, 02-02, and 02-03 complete)
+Plan: 5 of 5 in current phase (02-00, 02-01, 02-02, 02-03, and 02-04 complete)
 Status: in_progress
-Last activity: 2026-03-22 — Phase 2 plan 03 complete: background service worker, 8 tests green
+Last activity: 2026-03-22 — Phase 2 plan 04 complete: DEFAULT_DOMAINS for 5 platforms, content.js storage wiring, 60 tests green
 
-Progress: [█████████░] 89%
+Progress: [██████████] 100% of Phase 2
 
 ## Performance Metrics
 
@@ -52,6 +52,7 @@ Progress: [█████████░] 89%
 *Updated after each plan completion*
 
 | Phase 02-03 P03 | 8 min | 1 task | 3 files |
+| Phase 02-04 P04 | 15 min | 2 tasks | 3 files |
 
 ## Accumulated Context
 
@@ -78,6 +79,9 @@ Recent decisions affecting current work:
 - [Phase 2, plan 02]: getAllConfigs filters to domain-prefixed keys only (startsWith 'domains.') — excludes unrelated storage
 - [Phase 02-03]: Handler extraction to lib/background-handlers.js — avoids Jest ESM caching issues with top-level service worker listener registration
 - [Phase 02-03]: handleInstalled receives defaultDomains as parameter — enables clean mocking without jest.unstable_mockModule cache-busting complexity
+- [Phase 02-04]: Option B inline: bidi-detect functions inlined into content.js (no ES import) since Chrome loads content scripts without type:module
+- [Phase 02-04]: typeof chrome guard wraps all chrome API calls in content.js — prevents ReferenceError in Jest test environment
+- [Phase 02-04]: toHaveProperty([host]) array form required for dot-containing keys like 'chatgpt.com' to avoid Jest path traversal
 
 ### Roadmap Evolution
 
@@ -95,6 +99,6 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-03-22T14:39:55.208Z
-Stopped at: Completed 02-03-PLAN.md — background service worker, 8 tests green
+Last session: 2026-03-22T14:40:30Z
+Stopped at: Completed 02-04-PLAN.md — default-sites config + content.js storage wiring, 60 tests green
 Resume file: None

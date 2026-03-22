@@ -47,13 +47,14 @@ Plans:
   3. Configuration changes (selector enable/disable, domain toggle) persist across browser restarts and across the user's Chrome profiles on other devices
   4. Pressing Ctrl+Shift+H (or MacCtrl+Shift+H) on any page toggles Hebrew correction for that domain on/off instantly
   5. On a domain with many selectors, storage falls back to `chrome.storage.local` automatically before hitting the sync quota
-**Plans**: TBD
+**Plans**: 5 plans
 
 Plans:
-- [ ] 02-01: Manifest V3 scaffold (manifest.json, file structure, permissions, content script injection, command declaration)
-- [ ] 02-02: Storage abstraction layer (chrome.storage.sync with local fallback, per-domain key schema, auto-save)
-- [ ] 02-03: Background service worker (install handler seeding default sites, badge updates, keyboard shortcut routing)
-- [ ] 02-04: Pre-configured selectors for all five platforms (ChatGPT, Claude.ai, Gemini, NotebookLM, Slack) with configurable load delay
+- [ ] 02-00-PLAN.md — Wave 0 test scaffold: Chrome API mocks, test stubs for storage, background, and default-sites
+- [ ] 02-01-PLAN.md — Manifest V3 expansion: permissions, background service worker declaration, commands block, action block
+- [ ] 02-02-PLAN.md — Storage abstraction layer: lib/storage.js with sync-to-local fallback, per-domain key schema
+- [ ] 02-03-PLAN.md — Background service worker: install seeding, badge updates, keyboard shortcut routing
+- [ ] 02-04-PLAN.md — Pre-configured selectors and content.js wiring: default-sites config, storage integration, message handling
 
 ### Phase 3: Popup UI and Config Actions
 **Goal**: Users can view and control their Hebrew correction settings for any domain through a popup without opening DevTools
@@ -69,7 +70,7 @@ Plans:
 
 Plans:
 - [ ] 03-01: Popup shell (domain header, master toggle, selector list with checkboxes and delete buttons)
-- [ ] 03-02: Real-time hover highlights (popup↔content script messaging for selector preview)
+- [ ] 03-02: Real-time hover highlights (popup<>content script messaging for selector preview)
 - [ ] 03-03: Actions menu (Export Config as JSON, Delete All Selectors, User Guide link, keyboard shortcut settings link)
 
 ### Phase 4: Visual Element Picker
@@ -90,11 +91,11 @@ Plans:
 ## Progress
 
 **Execution Order:**
-Phases execute in numeric order: 1 → 2 → 3 → 4
+Phases execute in numeric order: 1 -> 2 -> 3 -> 4
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. RTL Engine | 0/4 | Not started | - |
-| 2. Extension Wiring and Pre-configured Sites | 0/4 | Not started | - |
+| 1. RTL Engine | 4/4 | Complete | 2026-03-22 |
+| 2. Extension Wiring and Pre-configured Sites | 0/5 | Planning complete | - |
 | 3. Popup UI and Config Actions | 0/3 | Not started | - |
 | 4. Visual Element Picker | 0/2 | Not started | - |

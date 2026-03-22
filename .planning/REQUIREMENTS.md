@@ -20,10 +20,10 @@
 
 ### Configuration
 
-- [ ] **CFG-01**: Extension stores per-domain configuration with multiple CSS selectors per domain in `chrome.storage.sync`, with automatic fallback to `chrome.storage.local` when sync quota is exceeded (FR-100)
+- [x] **CFG-01**: Extension stores per-domain configuration with multiple CSS selectors per domain in `chrome.storage.sync`, with automatic fallback to `chrome.storage.local` when sync quota is exceeded (FR-100)
 - [ ] **CFG-02**: Extension ships pre-configured selectors for ChatGPT (chatgpt.com), Claude.ai, Google Gemini (gemini.google.com), NotebookLM (notebooklm.google.com), and Slack (app.slack.com) (FR-101)
 - [ ] **CFG-03**: Extension supports configurable load delay (milliseconds) per domain for sites with late-loading content (FR-106)
-- [ ] **CFG-04**: Extension auto-saves all configuration changes immediately without requiring an explicit save action (FR-107)
+- [x] **CFG-04**: Extension auto-saves all configuration changes immediately without requiring an explicit save action (FR-107)
 - [ ] **CFG-05**: Extension supports configuration export as a downloadable JSON file (FR-108)
 
 ### Element Picker
@@ -104,10 +104,10 @@
 | ENG-06 | Phase 1 | Pending |
 | ENG-07 | Phase 1 | Pending |
 | ENG-08 | Phase 1 | Pending |
-| CFG-01 | Phase 2 | Pending |
+| CFG-01 | Phase 2 | Complete |
 | CFG-02 | Phase 2 | Pending |
 | CFG-03 | Phase 2 | Pending |
-| CFG-04 | Phase 2 | Pending |
+| CFG-04 | Phase 2 | Complete |
 | CFG-05 | Phase 3 | Pending |
 | PICK-01 | Phase 4 | Pending |
 | PICK-02 | Phase 4 | Pending |

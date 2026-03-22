@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: in_progress
-stopped_at: "Completed 02-00-PLAN.md — Chrome mock + 22 todo test stubs"
+stopped_at: "Completed 02-02-PLAN.md — storage abstraction layer, 7 tests green"
 last_updated: "2026-03-22"
-last_activity: "2026-03-22 — Phase 2 plan 00 complete: Chrome API mock factory + 3 test stub files (22 todos)"
+last_activity: "2026-03-22 — Phase 2 plan 02 complete: lib/storage.js with sync-to-local fallback, 7 tests green"
 progress:
   total_phases: 4
   completed_phases: 1
-  total_plans: 8
-  completed_plans: 6
-  percent: 37
+  total_plans: 9
+  completed_plans: 7
+  percent: 43
 ---
 
 # Project State
@@ -26,11 +26,11 @@ See: .planning/PROJECT.md (updated 2026-03-22)
 ## Current Position
 
 Phase: 2 of 4 (Extension Wiring and Pre-configured Sites)
-Plan: 2 of 4 in current phase (02-00 and 02-01 complete)
+Plan: 3 of 5 in current phase (02-00, 02-01, and 02-02 complete)
 Status: in_progress
-Last activity: 2026-03-22 — Phase 2 plan 00 complete: Chrome mock + 22 todo test stubs (Wave 0 scaffold)
+Last activity: 2026-03-22 — Phase 2 plan 02 complete: storage abstraction with sync-to-local fallback, 7 tests green
 
-Progress: [████░░░░░░] 37%
+Progress: [████░░░░░░] 43%
 
 ## Performance Metrics
 
@@ -71,6 +71,9 @@ Recent decisions affecting current work:
 - [Phase 2, plan 01]: Removed "type: module" from content_scripts — not listed in Chrome manifest docs; plan 02-04 handles import resolution
 - [Phase 2, plan 01]: Background service worker declared with type: module — confirmed supported
 - [Phase 2, plan 01]: Version bumped to 0.2.0 to mark Phase 2 manifest boundary
+- [Phase 2, plan 02]: null (not undefined) returned when no domain config found — explicit null sentinel
+- [Phase 2, plan 02]: setDomainConfig catches all errors from sync.set (not just QUOTA_BYTES) — simpler and more resilient
+- [Phase 2, plan 02]: getAllConfigs filters to domain-prefixed keys only (startsWith 'domains.') — excludes unrelated storage
 
 ### Roadmap Evolution
 
@@ -89,5 +92,5 @@ None.
 ## Session Continuity
 
 Last session: 2026-03-22
-Stopped at: Completed 02-00-PLAN.md — Chrome API mock + 22 todo stubs (Wave 0 scaffold done)
-Resume file: .planning/phases/02-extension-wiring-and-pre-configured-sites/
+Stopped at: Completed 02-02-PLAN.md — storage abstraction layer, 7 tests green
+Resume file: .planning/phases/02-extension-wiring-and-pre-configured-sites/02-03-PLAN.md

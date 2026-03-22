@@ -52,7 +52,7 @@ Plans:
 Plans:
 - [ ] 02-00-PLAN.md — Wave 0 test scaffold: Chrome API mocks, test stubs for storage, background, and default-sites
 - [ ] 02-01-PLAN.md — Manifest V3 expansion: permissions, background service worker declaration, commands block, action block
-- [ ] 02-02-PLAN.md — Storage abstraction layer: lib/storage.js with sync-to-local fallback, per-domain key schema
+- [x] 02-02-PLAN.md — Storage abstraction layer: lib/storage.js with sync-to-local fallback, per-domain key schema
 - [ ] 02-03-PLAN.md — Background service worker: install seeding, badge updates, keyboard shortcut routing
 - [ ] 02-04-PLAN.md — Pre-configured selectors and content.js wiring: default-sites config, storage integration, message handling
 
@@ -96,6 +96,6 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. RTL Engine | 4/4 | Complete | 2026-03-22 |
-| 2. Extension Wiring and Pre-configured Sites | 2/5 | In Progress|  |
+| 2. Extension Wiring and Pre-configured Sites | 3/5 | In Progress|  |
 | 3. Popup UI and Config Actions | 0/3 | Not started | - |
 | 4. Visual Element Picker | 0/2 | Not started | - |

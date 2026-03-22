@@ -46,6 +46,7 @@ Exceptions:
 - Popup body width: 280px (fixed — locked in CONTEXT.md; set on `body { width: 280px }`)
 - Touch/click targets for buttons: minimum 28px height (Delete ✕ button, checkbox)
 - Confirm dialog buttons: minimum 32px height for clear tap affordance
+- **`md: 12px` justification:** The popup canvas is 280px wide. Using 16px body padding would leave only 248px of usable content width, making truncated selector text harder to read. 8px would feel cramped against the border. 12px is the deliberate midpoint that preserves readability within the constrained popup width. It is a multiple of 4 and is consciously preferred over both 8px and 16px for this specific layout.
 
 Source: CONTEXT.md (width: ~280px), defaults for all other values.
 
@@ -64,6 +65,8 @@ Font stack for all text: `system-ui, -apple-system, BlinkMacSystemFont, "Segoe U
 
 Selector text overflow: `overflow: hidden; text-overflow: ellipsis; white-space: nowrap`
 Full selector text exposed via `title` attribute (native tooltip on hover).
+
+**Note on 13px/14px proximity:** The 1px size difference between the domain name (14px) and selector text (13px) is intentional. Hierarchy is not established by size alone — it is reinforced by weight (600 semibold vs. 400 regular) and vertical position (header above list). In the 280px popup canvas, a larger size jump (e.g., 16px vs. 13px) would create disproportionate visual weight given the compact height of each row.
 
 Source: defaults informed by Chrome extension UI conventions; selector truncation from CONTEXT.md.
 
@@ -93,6 +96,12 @@ Destructive (#DC2626) reserved for:
 Disabled state: when master toggle is OFF, the selector list container gets `opacity: 0.4; pointer-events: none`. No color change — opacity only.
 
 Source: highlight color #2563EB locked in CONTEXT.md. #DC2626 is standard red-600 (Tailwind convention, no Tailwind required). All other values are defaults.
+
+---
+
+## Primary Visual Anchor
+
+The master toggle in the header (`<input type="checkbox" id="master-toggle">` styled as a pill toggle) is the primary visual anchor of the popup. It is the only element rendered at weight 600 semibold context (the domain name beside it is also 600, forming a single unified header unit). The toggle controls all behavior below it — when OFF, the entire selector list dims to opacity 0.4 and becomes non-interactive. Executor must ensure the toggle is visually prominent and is the first focusable element in tab order.
 
 ---
 
@@ -228,6 +237,8 @@ All components are hand-built HTML elements — no component library.
 | Add Selector message | `<p id="add-selector-msg" hidden>` | Auto-hidden after 3 seconds |
 | Empty state | `<p id="empty-state">` | Shown when `selectors.length === 0` |
 | Not available state | `<p id="not-available">` | Shown when hostname resolution fails |
+
+**Delete button accessibility:** The delete button (`<button class="delete-btn">`) must carry both `title="Remove selector"` (native tooltip) and `aria-label="Remove selector"` (screen reader label). The visible content is `✕` (Unicode U+2715) which is not reliably announced by all screen readers, so the explicit `aria-label` is required.
 
 ---
 

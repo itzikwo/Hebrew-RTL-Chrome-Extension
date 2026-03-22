@@ -1,7 +1,60 @@
 // content.js
 // Phase 1: Per-element RTL style application and detection.
-// MutationObserver integration added in Plan 03.
-import { detectDirection, isExemptElement, getFirstSubstantiveText } from './lib/bidi-detect.js';
+// Phase 2: Storage integration, loadDelay, reactive config updates, message handling.
+//
+// NOTE: This file is loaded as a plain content script (no ES module imports).
+// The bidi-detect functions are inlined here from lib/bidi-detect.js so that
+// Chrome can load this file without "type":"module" in content_scripts.
+// lib/bidi-detect.js is kept as a separate module for use by background.js
+// and for direct Jest imports.
+
+// ---- Inlined from lib/bidi-detect.js ----
+
+// U+0590-05FF: Hebrew block (letters, nikkud, cantillation, punctuation)
+// U+FB1D-FB4F: Hebrew Presentation Forms (legacy word processor output)
+const _HEBREW_RE = /[\u0590-\u05FF\uFB1D-\uFB4F]/;
+
+// Hebrew letters and presentation forms used in 30% threshold calculation
+const _HEBREW_LETTER_RE = /[\u05D0-\u05EA\u05F0-\u05F4\uFB1D-\uFB4F]/;
+
+// Characters to skip in first-strong-character pass (neutrals)
+const _SKIP_RE = /[\s\d\u0021-\u002F\u003A-\u0040\u005B-\u0060\u007B-\u00BF]|[\uD800-\uDFFF]/;
+
+function _detectDirection(text) {
+  const chars = [...text];
+  for (const ch of chars) {
+    if (_SKIP_RE.test(ch)) continue;
+    if (_HEBREW_RE.test(ch)) return 'rtl';
+    break;
+  }
+  const letterCount = chars.filter(ch => /\p{L}/u.test(ch)).length;
+  if (letterCount === 0) return 'ltr';
+  const hebrewCount = chars.filter(ch => _HEBREW_LETTER_RE.test(ch)).length;
+  return hebrewCount / letterCount >= 0.30 ? 'rtl' : 'ltr';
+}
+
+function _isExemptElement(el) {
+  const tag = el.tagName?.toLowerCase();
+  if (['code', 'pre', 'kbd', 'samp'].includes(tag)) return true;
+  if (el.matches?.('.katex, .math, [class*="math"], [class*="latex"]')) return true;
+  if (el.closest?.('.katex, .math, pre, code')) return true;
+  const text = el.textContent?.trim() ?? '';
+  if (/^(https?|ftp|file):\/\//i.test(text)) return true;
+  if (/^\/[a-z0-9._\-/]+$/i.test(text)) return true;
+  return false;
+}
+
+function _getFirstSubstantiveText(el) {
+  const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
+  let node;
+  while ((node = walker.nextNode())) {
+    const text = node.textContent.trim();
+    if (text.length > 0) return text;
+  }
+  return el.textContent?.trim() ?? '';
+}
+
+// ---- Phase 1: Core RTL engine ----
 
 export const MARKER = 'data-hrtl-processed';
 export const DEBOUNCE_MS = 100;
@@ -48,9 +101,9 @@ export function processElement(el, selectorConfig) {
     applyDirection(el, 'rtl');
     return;
   }
-  if (isExemptElement(el)) return;
-  const text = getFirstSubstantiveText(el);
-  const dir = detectDirection(text);
+  if (_isExemptElement(el)) return;
+  const text = _getFirstSubstantiveText(el);
+  const dir = _detectDirection(text);
   applyDirection(el, dir);
 }
 
@@ -115,4 +168,102 @@ export function stopObserver() {
     _observer.disconnect();
     _observer = null;
   }
+}
+
+// ---- Phase 2: Storage Integration ----
+
+let _config = null;
+let _enabled = false;
+
+function processAllSelectors(selectors) {
+  if (!selectors || !Array.isArray(selectors)) return;
+  for (const sel of selectors) {
+    if (!sel.enabled) continue;
+    const selectorConfig = { forceRTL: sel.forceRTL };
+    try {
+      const elements = document.querySelectorAll(sel.selector);
+      elements.forEach(el => {
+        if (!el.hasAttribute(MARKER)) {
+          processElement(el, selectorConfig);
+        }
+      });
+    } catch (e) {
+      // Invalid selector -- skip silently
+      console.warn(`[Hebrew RTL] Invalid selector: ${sel.selector}`, e.message);
+    }
+  }
+}
+
+function buildSelectorConfig(selectors) {
+  // Build a single selectorConfig object for the observer.
+  // If ANY enabled selector has forceRTL, pass forceRTL to the observer.
+  const hasForceRTL = selectors?.some(s => s.enabled && s.forceRTL) ?? false;
+  return { forceRTL: hasForceRTL };
+}
+
+async function init() {
+  const hostname = location.hostname;
+  const key = `domains.${hostname}`;
+  const data = await chrome.storage.sync.get(key)
+    .catch(() => chrome.storage.local.get(key));
+  _config = data[key] ?? null;
+
+  if (!_config?.enabled) return;
+
+  if (_config.loadDelay > 0) {
+    await new Promise(r => setTimeout(r, _config.loadDelay));
+  }
+
+  _enabled = true;
+  processAllSelectors(_config.selectors);
+
+  const selectorString = _config.selectors
+    .filter(s => s.enabled)
+    .map(s => s.selector)
+    .join(', ');
+  startObserver(selectorString, buildSelectorConfig(_config.selectors));
+}
+
+// Guard chrome API calls so Jest imports of content.js do not throw when
+// chrome is undefined (content.test.js and mutation.test.js set up no chrome mock).
+if (typeof chrome !== 'undefined') {
+  // Reactive update when config changes (CFG-04 auto-save)
+  chrome.storage.onChanged.addListener((changes, _areaName) => {
+    const key = `domains.${location.hostname}`;
+    if (changes[key]) {
+      _config = changes[key].newValue;
+      _enabled = _config?.enabled ?? false;
+      if (_enabled) {
+        processAllSelectors(_config.selectors);
+        const selectorString = _config.selectors
+          .filter(s => s.enabled)
+          .map(s => s.selector)
+          .join(', ');
+        startObserver(selectorString, buildSelectorConfig(_config.selectors));
+      } else {
+        stopObserver();
+      }
+    }
+  });
+
+  // Handle keyboard shortcut toggle from background.js
+  chrome.runtime.onMessage.addListener((msg, _sender, sendResponse) => {
+    if (msg.type === 'TOGGLE_DOMAIN') {
+      const key = `domains.${location.hostname}`;
+      chrome.storage.sync.get(key).then(data => {
+        const config = data[key] ?? { enabled: false, selectors: [], loadDelay: 0 };
+        config.enabled = !config.enabled;
+        chrome.storage.sync.set({ [key]: config })
+          .catch(() => chrome.storage.local.set({ [key]: config }));
+      });
+      sendResponse({ toggled: true });
+    }
+    if (msg.type === 'PING') {
+      sendResponse({ ready: true });
+    }
+    return true; // Keep message channel open for async response
+  });
+
+  // Bootstrap
+  init();
 }

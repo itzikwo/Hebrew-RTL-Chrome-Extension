@@ -29,12 +29,13 @@ Decimal phases appear between their surrounding integers in numeric order.
   3. Code blocks, `<pre>` elements, KaTeX formulas, URLs, and file paths inside Hebrew-heavy pages remain LTR
   4. As ChatGPT or Claude streams a Hebrew response token-by-token, direction is applied within 100ms of each mutation without causing infinite observer loops
   5. RTL list items display their bullets/numbers without them disappearing behind the text
-**Plans**: TBD
+**Plans**: 4 plans
 
 Plans:
-- [ ] 01-01: BiDi detection engine (first-strong-character + 30% mixed-content threshold + inline element traversal)
-- [ ] 01-02: Per-element RTL application, LTR preservation rules, and list bullet fix
-- [ ] 01-03: MutationObserver integration with 100ms debounce, processed-element marking, and forced-RTL mode
+- [ ] 01-00-PLAN.md — Jest test scaffold and project setup (package.json, three test stub files)
+- [ ] 01-01-PLAN.md — BiDi detection engine: lib/bidi-detect.js (detectDirection, isExemptElement, getFirstSubstantiveText)
+- [ ] 01-02-PLAN.md — Per-element RTL application: content.js style application layer (applyDirection, processElement, forced RTL, list bullet fix)
+- [ ] 01-03-PLAN.md — MutationObserver integration: startObserver with 100ms debounce and characterData re-evaluation; manifest.json skeleton
 
 ### Phase 2: Extension Wiring and Pre-configured Sites
 **Goal**: The extension installs from source and automatically corrects Hebrew on ChatGPT, Claude.ai, Gemini, NotebookLM, and Slack
@@ -93,7 +94,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. RTL Engine | 0/3 | Not started | - |
+| 1. RTL Engine | 0/4 | Not started | - |
 | 2. Extension Wiring and Pre-configured Sites | 0/4 | Not started | - |
 | 3. Popup UI and Config Actions | 0/3 | Not started | - |
 | 4. Visual Element Picker | 0/2 | Not started | - |

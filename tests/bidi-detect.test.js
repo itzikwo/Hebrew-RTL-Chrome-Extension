@@ -1,34 +1,111 @@
-// @jest-environment node
+/** @jest-environment jsdom */
 import { detectDirection, isExemptElement, getFirstSubstantiveText } from '../lib/bidi-detect.js';
 
 describe('detectDirection — ENG-01: first-strong-character', () => {
-  test.todo('pure Hebrew text returns rtl');
-  test.todo('pure English text returns ltr');
-  test.todo('punctuation-prefixed Hebrew returns rtl (skip neutrals)');
-  test.todo('emoji before Hebrew does not corrupt detection');
-  test.todo('empty string returns ltr');
+  test('pure Hebrew text returns rtl', () => {
+    expect(detectDirection('שלום עולם')).toBe('rtl');
+  });
+  test('pure English text returns ltr', () => {
+    expect(detectDirection('Hello world')).toBe('ltr');
+  });
+  test('punctuation-prefixed Hebrew returns rtl (skip neutrals)', () => {
+    expect(detectDirection('... שלום')).toBe('rtl');
+  });
+  test('emoji before Hebrew does not corrupt detection', () => {
+    expect(detectDirection('😀 שלום')).toBe('rtl');
+  });
+  test('empty string returns ltr', () => {
+    expect(detectDirection('')).toBe('ltr');
+  });
+  test('digits before Hebrew returns rtl (both skipped, Hebrew is first strong)', () => {
+    expect(detectDirection('123 שלום')).toBe('rtl');
+  });
 });
 
 describe('detectDirection — ENG-03: mixed-content 30% threshold', () => {
-  test.todo('text with >= 30% Hebrew chars returns rtl');
-  test.todo('text with < 30% Hebrew chars returns ltr');
-  test.todo('Hebrew Presentation Forms (U+FB1D-FB4F) counted in threshold');
-  test.todo('nikkud (U+05B0-U+05C7) counted in Hebrew range U+0590-05FF');
+  test('text with >= 30% Hebrew chars returns rtl', () => {
+    // 'Hi שלום world': 2+4+5=11 letters, 4 Hebrew = 36.4% >= 30%
+    expect(detectDirection('Hi שלום world')).toBe('rtl');
+  });
+  test('text with < 30% Hebrew chars returns ltr', () => {
+    expect(detectDirection('Hello world from Tel Aviv א')).toBe('ltr');
+  });
+  test('Hebrew Presentation Forms (U+FB1D-FB4F) counted in threshold', () => {
+    expect(detectDirection('\uFB2A\uFB2A\uFB2A hello')).toBe('rtl');
+  });
+  test('nikkud (U+05B0-U+05C7) counted in Hebrew range U+0590-05FF', () => {
+    expect(detectDirection('שרה\u05B0 hello')).toBe('rtl');
+  });
 });
 
 describe('isExemptElement — ENG-04: LTR preservation', () => {
-  test.todo('code element returns true');
-  test.todo('pre element returns true');
-  test.todo('element with class katex returns true');
-  test.todo('element inside .katex ancestor returns true');
-  test.todo('URL-only text content returns true');
-  test.todo('file path text content returns true');
-  test.todo('normal paragraph returns false');
+  test('code element returns true', () => {
+    expect(isExemptElement(document.createElement('code'))).toBe(true);
+  });
+  test('pre element returns true', () => {
+    expect(isExemptElement(document.createElement('pre'))).toBe(true);
+  });
+  test('element with class katex returns true', () => {
+    const el = document.createElement('span');
+    el.className = 'katex';
+    expect(isExemptElement(el)).toBe(true);
+  });
+  test('element inside .katex ancestor returns true', () => {
+    const parent = document.createElement('div');
+    parent.className = 'katex';
+    const child = document.createElement('span');
+    parent.appendChild(child);
+    document.body.appendChild(parent);
+    expect(isExemptElement(child)).toBe(true);
+    document.body.removeChild(parent);
+  });
+  test('URL-only text content returns true', () => {
+    const el = document.createElement('p');
+    el.textContent = 'https://example.com';
+    expect(isExemptElement(el)).toBe(true);
+  });
+  test('file path text content returns true', () => {
+    const el = document.createElement('p');
+    el.textContent = '/usr/local/bin/node';
+    expect(isExemptElement(el)).toBe(true);
+  });
+  test('normal paragraph returns false', () => {
+    const el = document.createElement('p');
+    el.textContent = 'שלום עולם';
+    expect(isExemptElement(el)).toBe(false);
+  });
 });
 
 describe('getFirstSubstantiveText — ENG-08: inline element walking', () => {
-  test.todo('returns first non-whitespace text from direct text node');
-  test.todo('skips whitespace-only leading text nodes');
-  test.todo('finds Hebrew text after strong element label');
-  test.todo('handles li > strong > text + Hebrew sibling text node');
+  test('returns first non-whitespace text from direct text node', () => {
+    const el = document.createElement('p');
+    el.textContent = 'שלום';
+    expect(getFirstSubstantiveText(el)).toBe('שלום');
+  });
+  test('skips whitespace-only leading text nodes', () => {
+    const el = document.createElement('p');
+    el.appendChild(document.createTextNode('   '));
+    el.appendChild(document.createTextNode('שלום'));
+    expect(getFirstSubstantiveText(el)).toBe('שלום');
+  });
+  test('finds Hebrew text after strong element label', () => {
+    const li = document.createElement('li');
+    const strong = document.createElement('strong');
+    strong.textContent = 'Phase 1';
+    li.appendChild(strong);
+    li.appendChild(document.createTextNode(' – שלום'));
+    expect(getFirstSubstantiveText(li)).toBe('Phase 1');
+  });
+  test('handles li > strong > text + Hebrew sibling text node', () => {
+    const li = document.createElement('li');
+    const strong = document.createElement('strong');
+    strong.textContent = 'Label';
+    li.appendChild(strong);
+    li.appendChild(document.createTextNode('שלום עולם'));
+    expect(getFirstSubstantiveText(li)).toBe('Label');
+  });
+  test('empty element returns empty string', () => {
+    const el = document.createElement('p');
+    expect(getFirstSubstantiveText(el)).toBe('');
+  });
 });

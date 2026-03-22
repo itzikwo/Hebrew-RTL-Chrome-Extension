@@ -92,40 +92,40 @@
 
 ## Traceability
 
-*Updated during roadmap creation.*
+*Updated: 2026-03-22 after roadmap creation.*
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| ENG-01 | — | Pending |
-| ENG-02 | — | Pending |
-| ENG-03 | — | Pending |
-| ENG-04 | — | Pending |
-| ENG-05 | — | Pending |
-| ENG-06 | — | Pending |
-| ENG-07 | — | Pending |
-| ENG-08 | — | Pending |
-| CFG-01 | — | Pending |
-| CFG-02 | — | Pending |
-| CFG-03 | — | Pending |
-| CFG-04 | — | Pending |
-| CFG-05 | — | Pending |
-| PICK-01 | — | Pending |
-| PICK-02 | — | Pending |
-| PICK-03 | — | Pending |
-| POP-01 | — | Pending |
-| POP-02 | — | Pending |
-| POP-03 | — | Pending |
-| POP-04 | — | Pending |
-| POP-05 | — | Pending |
-| KBD-01 | — | Pending |
-| KBD-02 | — | Pending |
+| ENG-01 | Phase 1 | Pending |
+| ENG-02 | Phase 1 | Pending |
+| ENG-03 | Phase 1 | Pending |
+| ENG-04 | Phase 1 | Pending |
+| ENG-05 | Phase 1 | Pending |
+| ENG-06 | Phase 1 | Pending |
+| ENG-07 | Phase 1 | Pending |
+| ENG-08 | Phase 1 | Pending |
+| CFG-01 | Phase 2 | Pending |
+| CFG-02 | Phase 2 | Pending |
+| CFG-03 | Phase 2 | Pending |
+| CFG-04 | Phase 2 | Pending |
+| CFG-05 | Phase 3 | Pending |
+| PICK-01 | Phase 4 | Pending |
+| PICK-02 | Phase 4 | Pending |
+| PICK-03 | Phase 4 | Pending |
+| POP-01 | Phase 3 | Pending |
+| POP-02 | Phase 3 | Pending |
+| POP-03 | Phase 3 | Pending |
+| POP-04 | Phase 3 | Pending |
+| POP-05 | Phase 3 | Pending |
+| KBD-01 | Phase 2 | Pending |
+| KBD-02 | Phase 2 | Pending |
 
 **Coverage:**
 - v1 requirements: 23 total
-- Mapped to phases: 0 (pending roadmap)
-- Unmapped: 23 ⚠️
+- Mapped to phases: 23 (Phase 1: 8, Phase 2: 6, Phase 3: 6, Phase 4: 3)
+- Unmapped: 0
 
 ---
 
 *Requirements defined: 2026-03-22*
-*Last updated: 2026-03-22 after initial definition*
+*Last updated: 2026-03-22 after roadmap creation*

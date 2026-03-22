@@ -54,15 +54,63 @@ export function processElement(el, selectorConfig) {
   applyDirection(el, dir);
 }
 
-// ---- MutationObserver stubs — implemented in Plan 03 ----
+// ---- MutationObserver — Plan 03 ----
 
 let _observer = null;
+let _debounceTimer = null;
+const _pendingNodes = new Set();
 
-export function startObserver(selectors, selectorConfig) {
-  // Plan 03 implementation
+export function startObserver(_selectors, selectorConfig) {
+  if (_observer) {
+    _observer.disconnect();
+    _observer = null;
+  }
+
+  _observer = new MutationObserver((mutations) => {
+    for (const mutation of mutations) {
+      if (mutation.type === 'childList') {
+        mutation.addedNodes.forEach(node => {
+          if (node.nodeType === Node.ELEMENT_NODE && !node.hasAttribute(MARKER)) {
+            _pendingNodes.add(node);
+          }
+        });
+      }
+      // characterData: text of existing node changed (e.g. streaming tokens)
+      // Remove MARKER to allow bidirectional re-evaluation (LTR→RTL or RTL→LTR)
+      if (mutation.type === 'characterData' && mutation.target.parentElement) {
+        const el = mutation.target.parentElement;
+        el.removeAttribute(MARKER);
+        _pendingNodes.add(el);
+      }
+    }
+
+    // Debounce: batch all mutations within 100ms into one processing call
+    clearTimeout(_debounceTimer);
+    _debounceTimer = setTimeout(() => {
+      const nodes = [..._pendingNodes];
+      _pendingNodes.clear();
+      for (const node of nodes) {
+        if (node.hasAttribute(MARKER)) continue;
+        processElement(node, selectorConfig);
+        node.querySelectorAll?.(`*:not([${MARKER}])`).forEach(child => {
+          processElement(child, selectorConfig);
+        });
+      }
+    }, DEBOUNCE_MS);
+  });
+
+  // CRITICAL: attributes:true must NOT be set — setAttribute(MARKER) would
+  // trigger attribute mutations → infinite loop.
+  _observer.observe(document.body, {
+    childList: true,
+    subtree: true,
+    characterData: true,
+  });
 }
 
 export function stopObserver() {
+  clearTimeout(_debounceTimer);
+  _pendingNodes.clear();
   if (_observer) {
     _observer.disconnect();
     _observer = null;

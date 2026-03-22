@@ -1,0 +1,14 @@
+{
+  "manifest_version": 3,
+  "name": "Hebrew RTL",
+  "version": "0.1.0",
+  "description": "Hebrew text direction correction at element level",
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "run_at": "document_idle",
+      "type": "module"
+    }
+  ]
+}

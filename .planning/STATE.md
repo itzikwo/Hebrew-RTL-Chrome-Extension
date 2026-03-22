@@ -3,15 +3,15 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: in_progress
-stopped_at: "Completed 02-01-PLAN.md — manifest.json fully expanded"
+stopped_at: "Completed 02-00-PLAN.md — Chrome mock + 22 todo test stubs"
 last_updated: "2026-03-22"
-last_activity: "2026-03-22 — Phase 2 plan 01 complete: manifest 0.2.0 with permissions, background worker, action, commands"
+last_activity: "2026-03-22 — Phase 2 plan 00 complete: Chrome API mock factory + 3 test stub files (22 todos)"
 progress:
   total_phases: 4
   completed_phases: 1
   total_plans: 8
-  completed_plans: 5
-  percent: 31
+  completed_plans: 6
+  percent: 37
 ---
 
 # Project State
@@ -26,11 +26,11 @@ See: .planning/PROJECT.md (updated 2026-03-22)
 ## Current Position
 
 Phase: 2 of 4 (Extension Wiring and Pre-configured Sites)
-Plan: 1 of 4 in current phase
+Plan: 2 of 4 in current phase (02-00 and 02-01 complete)
 Status: in_progress
-Last activity: 2026-03-22 — Phase 2 plan 01 complete: manifest.json expanded to full MV3
+Last activity: 2026-03-22 — Phase 2 plan 00 complete: Chrome mock + 22 todo test stubs (Wave 0 scaffold)
 
-Progress: [███░░░░░░░] 31%
+Progress: [████░░░░░░] 37%
 
 ## Performance Metrics
 
@@ -66,6 +66,8 @@ Recent decisions affecting current work:
 - [Phase 1]: `jest-environment-jsdom` installed as separate devDep; `jest` imported from `@jest/globals` in ESM
 - [Phase 1]: MutationObserver tests require `async` + `await Promise.resolve()` before `advanceTimersByTime`
 - [Phase 1]: manifest.json created as minimal MV3 (no permissions/background/action — Phase 2 additions)
+- [Phase 2, plan 00]: createChromeMock() factory pattern (not singleton) — ensures no shared state between tests
+- [Phase 2, plan 00]: it.todo() stubs for Wave 0 — stubs skip cleanly until implementation plans fill in real code
 - [Phase 2, plan 01]: Removed "type: module" from content_scripts — not listed in Chrome manifest docs; plan 02-04 handles import resolution
 - [Phase 2, plan 01]: Background service worker declared with type: module — confirmed supported
 - [Phase 2, plan 01]: Version bumped to 0.2.0 to mark Phase 2 manifest boundary
@@ -87,5 +89,5 @@ None.
 ## Session Continuity
 
 Last session: 2026-03-22
-Stopped at: Completed 02-01-PLAN.md — manifest.json fully expanded to Phase 2 MV3
+Stopped at: Completed 02-00-PLAN.md — Chrome API mock + 22 todo stubs (Wave 0 scaffold done)
 Resume file: .planning/phases/02-extension-wiring-and-pre-configured-sites/

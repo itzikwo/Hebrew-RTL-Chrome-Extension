@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: in_progress
-stopped_at: Phase 3 UI-SPEC approved
-last_updated: "2026-03-22T18:08:20.784Z"
+stopped_at: Completed 03-01-PLAN.md — popup UI shell, 72 tests green
+last_updated: "2026-03-23T07:11:27.702Z"
 last_activity: "2026-03-22 — Phase 2 plan 04 complete: DEFAULT_DOMAINS for 5 platforms, content.js storage wiring, 60 tests green"
 progress:
   total_phases: 4
   completed_phases: 2
-  total_plans: 9
-  completed_plans: 9
+  total_plans: 11
+  completed_plans: 10
   percent: 100
 ---
 
@@ -53,6 +53,7 @@ Progress: [██████████] 100% of Phase 2
 
 | Phase 02-03 P03 | 8 min | 1 task | 3 files |
 | Phase 02-04 P04 | 15 min | 2 tasks | 3 files |
+| Phase 03 P01 | 8min | 3 tasks | 5 files |
 
 ## Accumulated Context
 
@@ -82,6 +83,9 @@ Recent decisions affecting current work:
 - [Phase 02-04]: Option B inline: bidi-detect functions inlined into content.js (no ES import) since Chrome loads content scripts without type:module
 - [Phase 02-04]: typeof chrome guard wraps all chrome API calls in content.js — prevents ReferenceError in Jest test environment
 - [Phase 02-04]: toHaveProperty([host]) array form required for dot-containing keys like 'chatgpt.com' to avoid Jest path traversal
+- [Phase 03]: Clone-and-replace DOM nodes on each renderPopup call prevents duplicate event listener accumulation
+- [Phase 03]: Export initPopup, renderPopup, renderSelectorRow for testability — no DOMContentLoaded coupling in tests
+- [Phase 03]: tabs.create added to createChromeMock() for Keyboard Shortcuts action forward compatibility
 
 ### Roadmap Evolution
 
@@ -99,6 +103,6 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-03-22T18:08:20.775Z
-Stopped at: Phase 3 UI-SPEC approved
-Resume file: .planning/phases/03-popup-ui-and-config-actions/03-UI-SPEC.md
+Last session: 2026-03-23T07:11:27.700Z
+Stopped at: Completed 03-01-PLAN.md — popup UI shell, 72 tests green
+Resume file: None

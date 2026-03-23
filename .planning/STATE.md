@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: in_progress
-stopped_at: Phase 4 context gathered
-last_updated: "2026-03-23T08:22:46.468Z"
+stopped_at: Completed 04-01-PLAN.md (element picker hover mode)
+last_updated: "2026-03-23T09:06:05.631Z"
 last_activity: "2026-03-22 — Phase 2 plan 04 complete: DEFAULT_DOMAINS for 5 platforms, content.js storage wiring, 60 tests green"
 progress:
   total_phases: 4
   completed_phases: 3
-  total_plans: 12
-  completed_plans: 12
+  total_plans: 14
+  completed_plans: 13
   percent: 100
 ---
 
@@ -56,6 +56,7 @@ Progress: [██████████] 100% of Phase 2
 | Phase 03 P01 | 8min | 3 tasks | 5 files |
 | Phase 03 P02 | 6min | 3 tasks | 4 files |
 | Phase 03-popup-ui-and-config-actions P03-03 | 1min | 2 tasks | 2 files |
+| Phase 04-visual-element-picker P01 | 4min | 2 tasks | 6 files |
 
 ## Accumulated Context
 
@@ -91,6 +92,9 @@ Recent decisions affecting current work:
 - [Phase 03]: ESM module caching: content.js onMessage listener captured once per describe block — import fires only once in Jest
 - [Phase 03]: renderPopup syncs _tabId/_hostname/_config module-level state — enables tests calling renderPopup directly to work with window unload handler
 - [Phase 03-popup-ui-and-config-actions]: Phase 3 delivers Add Selector (+) as a Coming soon placeholder — element picker activation is Phase 4 scope (PICK-01)
+- [Phase 04-01]: lib/picker.js dual-role: ES module exports for Jest + window._hrtlPicker for content script — same file serves both consumers without duplication
+- [Phase 04-01]: Named functions for picker event handlers (onPickerMouseMove, onPickerClick, onPickerKeyDown) — required for removeEventListener symmetry with same function reference
+- [Phase 04-01]: window.close() in popup requires jest.fn() mock in tests — jsdom destroys document context on window.close(); production code stays correct
 
 ### Roadmap Evolution
 
@@ -108,6 +112,6 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-03-23T08:22:46.458Z
-Stopped at: Phase 4 context gathered
-Resume file: .planning/phases/04-visual-element-picker/04-CONTEXT.md
+Last session: 2026-03-23T09:06:05.629Z
+Stopped at: Completed 04-01-PLAN.md (element picker hover mode)
+Resume file: None

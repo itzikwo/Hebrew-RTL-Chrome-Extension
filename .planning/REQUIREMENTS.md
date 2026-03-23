@@ -28,7 +28,7 @@
 
 ### Element Picker
 
-- [ ] **PICK-01**: Extension provides a visual element picker: user clicks a magnifying glass icon in popup, hovers over page elements to see an outline + tooltip showing element tag, classes, and computed selector, then clicks to select (FR-102)
+- [x] **PICK-01**: Extension provides a visual element picker: user clicks a magnifying glass icon in popup, hovers over page elements to see an outline + tooltip showing element tag, classes, and computed selector, then clicks to select (FR-102)
 - [ ] **PICK-02**: After element selection, extension shows an in-page Selector Builder overlay that lets the user choose ancestor level from a dropdown of the element's ancestor chain (each with a live preview highlight) and optionally add class/attribute filters (FR-103)
 - [ ] **PICK-03**: Selector Builder saves the generated selector to `chrome.storage.sync` for the current domain on Save, discards on Cancel (FR-103)
 
@@ -109,7 +109,7 @@
 | CFG-03 | Phase 2 | Complete |
 | CFG-04 | Phase 2 | Complete |
 | CFG-05 | Phase 3 | Complete |
-| PICK-01 | Phase 4 | Pending |
+| PICK-01 | Phase 4 | Complete |
 | PICK-02 | Phase 4 | Pending |
 | PICK-03 | Phase 4 | Pending |
 | POP-01 | Phase 3 | Complete |

@@ -5,11 +5,12 @@ import { createChromeMock } from './__mocks__/chrome.js';
 // Mock storage module before dynamic import of popup.js
 const mockGetDomainConfig = jest.fn();
 const mockSetDomainConfig = jest.fn();
+const mockGetAllConfigs = jest.fn().mockResolvedValue({});
 
 jest.unstable_mockModule('../lib/storage.js', () => ({
   getDomainConfig: mockGetDomainConfig,
   setDomainConfig: mockSetDomainConfig,
-  getAllConfigs: jest.fn().mockResolvedValue({})
+  getAllConfigs: mockGetAllConfigs
 }));
 
 const MOCK_CONFIG = {
@@ -266,6 +267,146 @@ describe('popup.js', () => {
         1,
         { type: 'CLEAR_HIGHLIGHT' }
       );
+    });
+  });
+
+  describe('actions menu', () => {
+    it('clicking Actions button shows the actions menu', () => {
+      renderPopup('chatgpt.com', MOCK_CONFIG, 1);
+
+      const actionsBtn = document.getElementById('actions-btn');
+      const actionsMenu = document.getElementById('actions-menu');
+
+      expect(actionsMenu.hidden).toBe(true);
+      actionsBtn.click();
+      expect(actionsMenu.hidden).toBe(false);
+    });
+
+    it('clicking Actions button again hides the actions menu (toggle)', () => {
+      renderPopup('chatgpt.com', MOCK_CONFIG, 1);
+
+      const actionsBtn = document.getElementById('actions-btn');
+      const actionsMenu = document.getElementById('actions-menu');
+
+      actionsBtn.click(); // open
+      actionsBtn.click(); // close
+      expect(actionsMenu.hidden).toBe(true);
+    });
+
+    it('clicking outside the actions-wrapper closes the actions menu', () => {
+      renderPopup('chatgpt.com', MOCK_CONFIG, 1);
+
+      const actionsBtn = document.getElementById('actions-btn');
+      const actionsMenu = document.getElementById('actions-menu');
+
+      actionsBtn.click(); // open
+      // Click outside the wrapper
+      document.body.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+      expect(actionsMenu.hidden).toBe(true);
+    });
+
+    it('pressing Escape closes the actions menu', () => {
+      renderPopup('chatgpt.com', MOCK_CONFIG, 1);
+
+      const actionsBtn = document.getElementById('actions-btn');
+      const actionsMenu = document.getElementById('actions-menu');
+
+      actionsBtn.click(); // open
+      document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
+      expect(actionsMenu.hidden).toBe(true);
+    });
+
+    it('Export Config calls getAllConfigs and creates a Blob download', async () => {
+      const mockConfigs = { 'domains.chatgpt.com': MOCK_CONFIG };
+      mockGetAllConfigs.mockResolvedValue(mockConfigs);
+
+      // Mock URL.createObjectURL and URL.revokeObjectURL
+      const mockObjectURL = 'blob:mock-url';
+      globalThis.URL.createObjectURL = jest.fn().mockReturnValue(mockObjectURL);
+      globalThis.URL.revokeObjectURL = jest.fn();
+
+      // Spy on document.createElement to capture anchor
+      const realCreateElement = document.createElement.bind(document);
+      let capturedAnchor = null;
+      jest.spyOn(document, 'createElement').mockImplementation((tag) => {
+        const el = realCreateElement(tag);
+        if (tag === 'a') capturedAnchor = el;
+        return el;
+      });
+
+      renderPopup('chatgpt.com', MOCK_CONFIG, 1);
+
+      const actionsBtn = document.getElementById('actions-btn');
+      actionsBtn.click(); // open menu
+      document.querySelector('[data-action="export"]').click();
+
+      // Allow async handler to settle
+      await new Promise(r => setTimeout(r, 0));
+
+      expect(mockGetAllConfigs).toHaveBeenCalled();
+      expect(URL.createObjectURL).toHaveBeenCalled();
+      expect(capturedAnchor).not.toBeNull();
+      expect(capturedAnchor.download).toMatch(/^hebrew-rtl-config-\d{4}-\d{2}-\d{2}\.json$/);
+
+      // Cleanup spy
+      document.createElement.mockRestore();
+    });
+
+    it('Delete All Selectors shows confirm-dialog with domain-specific text', () => {
+      renderPopup('chatgpt.com', MOCK_CONFIG, 1);
+
+      const actionsBtn = document.getElementById('actions-btn');
+      actionsBtn.click(); // open menu
+      document.querySelector('[data-action="delete-all"]').click();
+
+      const confirmDialog = document.getElementById('confirm-dialog');
+      const confirmText = document.getElementById('confirm-text');
+
+      expect(confirmDialog.hidden).toBe(false);
+      expect(confirmText.textContent).toBe('Delete all selectors for chatgpt.com? This cannot be undone.');
+    });
+
+    it('confirm-dialog Confirm button empties selectors, saves config, and re-renders empty state', async () => {
+      const config = JSON.parse(JSON.stringify(MOCK_CONFIG));
+      renderPopup('chatgpt.com', config, 1);
+
+      // Show the confirm dialog
+      const actionsBtn = document.getElementById('actions-btn');
+      actionsBtn.click();
+      document.querySelector('[data-action="delete-all"]').click();
+
+      // Click Confirm
+      document.getElementById('confirm-ok').click();
+
+      await Promise.resolve();
+      await Promise.resolve(); // extra tick for setDomainConfig
+
+      expect(mockSetDomainConfig).toHaveBeenCalledWith('chatgpt.com', expect.objectContaining({ selectors: [] }));
+      expect(document.getElementById('confirm-dialog').hidden).toBe(true);
+      expect(document.getElementById('empty-state').hidden).toBe(false);
+    });
+
+    it('confirm-dialog Cancel button hides dialog without changing storage', () => {
+      renderPopup('chatgpt.com', MOCK_CONFIG, 1);
+
+      const actionsBtn = document.getElementById('actions-btn');
+      actionsBtn.click();
+      document.querySelector('[data-action="delete-all"]').click();
+
+      document.getElementById('confirm-cancel').click();
+
+      expect(document.getElementById('confirm-dialog').hidden).toBe(true);
+      expect(mockSetDomainConfig).not.toHaveBeenCalled();
+    });
+
+    it('Keyboard Shortcuts calls chrome.tabs.create with chrome://extensions/shortcuts', () => {
+      renderPopup('chatgpt.com', MOCK_CONFIG, 1);
+
+      const actionsBtn = document.getElementById('actions-btn');
+      actionsBtn.click();
+      document.querySelector('[data-action="shortcuts"]').click();
+
+      expect(chrome.tabs.create).toHaveBeenCalledWith({ url: 'chrome://extensions/shortcuts' });
     });
   });
 });

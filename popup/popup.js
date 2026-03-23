@@ -145,9 +145,18 @@ export function renderPopup(hostname, config, tabId) {
   // Actions menu items
   const exportBtn = document.querySelector('[data-action="export"]');
   if (exportBtn) {
-    exportBtn.addEventListener('click', () => {
+    exportBtn.addEventListener('click', async () => {
       if (actionsMenu) actionsMenu.hidden = true;
-      // Export handled in Plan 02
+      const allConfigs = await getAllConfigs();
+      const json = JSON.stringify(allConfigs, null, 2);
+      const blob = new Blob([json], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      const date = new Date().toISOString().slice(0, 10);
+      a.href = url;
+      a.download = `hebrew-rtl-config-${date}.json`;
+      a.click();
+      URL.revokeObjectURL(url);
     });
   }
 
@@ -177,6 +186,14 @@ export function renderPopup(hostname, config, tabId) {
       }
     }
   }, { once: false });
+
+  // Close actions menu on Escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      const menu = document.getElementById('actions-menu');
+      if (menu) menu.hidden = true;
+    }
+  });
 
   // Confirm dialog buttons
   const confirmCancel = document.getElementById('confirm-cancel');

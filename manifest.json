@@ -21,7 +21,8 @@
     }
   ],
   "action": {
-    "default_title": "Hebrew RTL"
+    "default_title": "Hebrew RTL",
+    "default_popup": "popup/popup.html"
   },
   "commands": {
     "toggle-rtl": {

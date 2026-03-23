@@ -24,6 +24,7 @@ export function createChromeMock() {
     tabs: {
       query: jest.fn().mockResolvedValue([{ id: 1, url: 'https://chatgpt.com/' }]),
       sendMessage: jest.fn().mockResolvedValue(undefined),
+      create: jest.fn().mockResolvedValue(undefined),
       onActivated: { addListener: jest.fn() }
     },
     runtime: {

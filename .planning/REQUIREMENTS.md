@@ -35,8 +35,8 @@
 ### Popup UI
 
 - [x] **POP-01**: Popup shows current domain name and master enable/disable toggle prominently at the top (FR-200)
-- [x] **POP-02**: Popup lists all configured selectors for the current domain with: enable/disable checkbox, delete button, and element picker trigger per row (FR-201)
-- [x] **POP-03**: Popup includes an Add Selector button (+) that creates a new empty selector row ready for picker activation (FR-202)
+- [x] **POP-02**: Popup lists all configured selectors for the current domain with: enable/disable checkbox and delete button per row (FR-201). Element picker trigger per row deferred to Phase 4 (PICK-01).
+- [x] **POP-03**: Popup includes an Add Selector button (+) that shows a "Coming soon" placeholder (FR-202). Full picker activation delivered in Phase 4 (PICK-01).
 - [x] **POP-04**: Hovering over a selector row in the popup highlights matching elements on the page in real time (FR-203)
 - [x] **POP-05**: Popup includes an Actions menu with: Export Config, Delete All Selectors, User Guide link, and Keyboard Shortcut configuration (FR-204)
 
@@ -113,8 +113,8 @@
 | PICK-02 | Phase 4 | Pending |
 | PICK-03 | Phase 4 | Pending |
 | POP-01 | Phase 3 | Complete |
-| POP-02 | Phase 3 | Complete |
-| POP-03 | Phase 3 | Complete |
+| POP-02 | Phase 3 + Phase 4 | Partial (picker trigger in Phase 4) |
+| POP-03 | Phase 3 + Phase 4 | Partial (picker activation in Phase 4) |
 | POP-04 | Phase 3 | Complete |
 | POP-05 | Phase 3 | Complete |
 | KBD-01 | Phase 2 | Complete |

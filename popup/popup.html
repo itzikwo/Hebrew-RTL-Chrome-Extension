@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="he" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hebrew RTL</title>
+  <style>
+    /* Reset and base */
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    body {
+      width: 280px;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      margin: 0;
+      padding: 8px;
+      background: #FFFFFF;
+      color: #111827;
+    }
+
+    /* Header */
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    #domain-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: #111827;
+      line-height: 1.2;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      flex: 1;
+    }
+
+    /* Master toggle — CSS-only pill */
+    .toggle {
+      display: inline-flex;
+      align-items: center;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    .toggle input[type="checkbox"] {
+      appearance: none;
+      -webkit-appearance: none;
+      width: 36px;
+      height: 20px;
+      background: #E5E7EB;
+      border-radius: 10px;
+      position: relative;
+      cursor: pointer;
+      transition: background 0.2s;
+      margin: 0;
+    }
+
+    .toggle input[type="checkbox"]:checked {
+      background: #2563EB;
+    }
+
+    .toggle input[type="checkbox"]::before {
+      content: '';
+      position: absolute;
+      top: 4px;
+      left: 4px;
+      width: 12px;
+      height: 12px;
+      background: #FFFFFF;
+      border-radius: 50%;
+      transition: transform 0.2s;
+    }
+
+    .toggle input[type="checkbox"]:checked::before {
+      transform: translateX(16px);
+    }
+
+    /* Selector list */
+    #selector-list {
+      max-height: 240px;
+      overflow-y: auto;
+      margin-bottom: 16px;
+      border: 1px solid #E5E7EB;
+      border-radius: 4px;
+    }
+
+    #selector-list:empty {
+      display: none;
+    }
+
+    .selector-list--disabled {
+      opacity: 0.4;
+      pointer-events: none;
+    }
+
+    .selector-row {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      padding: 8px;
+      border-bottom: 1px solid #E5E7EB;
+    }
+
+    .selector-row:last-child {
+      border-bottom: none;
+    }
+
+    .selector-row:hover {
+      background: #F3F4F6;
+    }
+
+    .selector-text {
+      font-size: 13px;
+      font-weight: 400;
+      color: #111827;
+      line-height: 1.4;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      flex: 1;
+      min-width: 0;
+    }
+
+    .selector-row input[type="checkbox"] {
+      flex-shrink: 0;
+      cursor: pointer;
+      width: 16px;
+      height: 16px;
+      min-height: 16px;
+    }
+
+    .delete-btn {
+      color: #DC2626;
+      border: none;
+      background: none;
+      cursor: pointer;
+      min-height: 28px;
+      min-width: 28px;
+      padding: 0;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 4px;
+      flex-shrink: 0;
+    }
+
+    .delete-btn:hover {
+      background: #FEE2E2;
+    }
+
+    /* Empty and not-available states */
+    #empty-state,
+    #not-available {
+      font-size: 13px;
+      color: #6B7280;
+      margin: 8px 0 16px;
+      line-height: 1.4;
+    }
+
+    /* Footer */
+    footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      position: relative;
+    }
+
+    #add-selector-btn {
+      font-size: 13px;
+      font-weight: 400;
+      color: #111827;
+      background: none;
+      border: 1px solid #E5E7EB;
+      border-radius: 4px;
+      padding: 6px 10px;
+      cursor: pointer;
+      line-height: 1.2;
+      min-height: 32px;
+    }
+
+    #add-selector-btn:hover {
+      background: #F3F4F6;
+    }
+
+    .actions-wrapper {
+      position: relative;
+    }
+
+    #actions-btn {
+      font-size: 13px;
+      font-weight: 400;
+      color: #111827;
+      background: none;
+      border: 1px solid #E5E7EB;
+      border-radius: 4px;
+      padding: 6px 10px;
+      cursor: pointer;
+      line-height: 1.2;
+      min-height: 32px;
+    }
+
+    #actions-btn:hover {
+      background: #F3F4F6;
+    }
+
+    #actions-menu {
+      position: absolute;
+      bottom: 100%;
+      right: 0;
+      background: #F3F4F6;
+      border: 1px solid #E5E7EB;
+      border-radius: 4px;
+      list-style: none;
+      padding: 4px 0;
+      margin: 0 0 4px;
+      min-width: 180px;
+      z-index: 20;
+    }
+
+    #actions-menu li button {
+      display: block;
+      width: 100%;
+      text-align: left;
+      font-size: 13px;
+      font-weight: 400;
+      color: #111827;
+      background: none;
+      border: none;
+      padding: 8px 12px;
+      cursor: pointer;
+      line-height: 1.2;
+      min-height: 32px;
+    }
+
+    #actions-menu li button:hover {
+      background: #E5E7EB;
+    }
+
+    #actions-menu li button[data-action="delete-all"] {
+      color: #DC2626;
+    }
+
+    /* Add selector message */
+    #add-selector-msg {
+      font-size: 13px;
+      color: #6B7280;
+      margin: 8px 0 0;
+      line-height: 1.4;
+    }
+
+    /* Confirm dialog */
+    #confirm-dialog {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: #F3F4F6;
+      border: 1px solid #E5E7EB;
+      border-radius: 4px;
+      z-index: 10;
+      padding: 24px;
+    }
+
+    #confirm-text {
+      font-size: 13px;
+      font-weight: 400;
+      color: #111827;
+      line-height: 1.5;
+      margin: 0 0 16px;
+    }
+
+    .confirm-buttons {
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+    }
+
+    #confirm-cancel {
+      font-size: 13px;
+      font-weight: 400;
+      color: #111827;
+      background: none;
+      border: 1px solid #E5E7EB;
+      border-radius: 4px;
+      padding: 6px 12px;
+      cursor: pointer;
+      min-height: 32px;
+    }
+
+    #confirm-cancel:hover {
+      background: #E5E7EB;
+    }
+
+    #confirm-ok {
+      font-size: 13px;
+      font-weight: 400;
+      color: #DC2626;
+      background: none;
+      border: 1px solid #DC2626;
+      border-radius: 4px;
+      padding: 6px 12px;
+      cursor: pointer;
+      min-height: 32px;
+    }
+
+    #confirm-ok:hover {
+      background: #FEE2E2;
+    }
+  </style>
+</head>
+<body>
+  <!-- Confirm dialog (overlays full popup body; hidden by default) -->
+  <div id="confirm-dialog" hidden>
+    <p id="confirm-text"></p>
+    <div class="confirm-buttons">
+      <button id="confirm-cancel">Cancel</button>
+      <button id="confirm-ok">Confirm</button>
+    </div>
+  </div>
+
+  <!-- Header: domain name + master toggle -->
+  <header>
+    <span id="domain-name">loading...</span>
+    <label class="toggle">
+      <input type="checkbox" id="master-toggle">
+      <span class="toggle-slider"></span>
+    </label>
+  </header>
+
+  <!-- Not available state (shown when hostname cannot be resolved) -->
+  <p id="not-available" hidden>Not available on this page</p>
+
+  <!-- Selector list (populated by popup.js) -->
+  <section id="selector-list"></section>
+
+  <!-- Empty state (shown when selectors array is empty) -->
+  <p id="empty-state" hidden>No selectors configured — add one with +</p>
+
+  <!-- Add selector message (shown on + click, auto-hides after 3s) -->
+  <p id="add-selector-msg" hidden>Coming soon — element picker in next update</p>
+
+  <!-- Footer: Add Selector + Actions -->
+  <footer>
+    <button id="add-selector-btn">+ Add Selector</button>
+    <div class="actions-wrapper">
+      <button id="actions-btn">Actions &#9662;</button>
+      <ul id="actions-menu" hidden>
+        <li><button data-action="export">Export Config</button></li>
+        <li><button data-action="delete-all">Delete All Selectors</button></li>
+        <li><button data-action="shortcuts">Keyboard Shortcuts</button></li>
+      </ul>
+    </div>
+  </footer>
+
+  <script type="module" src="popup.js"></script>
+</body>
+</html>

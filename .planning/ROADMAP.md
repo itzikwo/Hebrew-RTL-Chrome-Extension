@@ -82,11 +82,11 @@ Plans:
   2. Clicking an element opens the Selector Builder overlay showing the ancestor chain; selecting a different ancestor level updates the live highlight on the page to preview which elements will be targeted
   3. Clicking Save in the Selector Builder closes the overlay, adds the new selector to storage for the current domain, and the popup list updates immediately
   4. Clicking Cancel or pressing Escape exits picker mode without saving anything, and the page returns to its normal state
-**Plans**: TBD
+**Plans**: 2 plans
 
 Plans:
-- [ ] 04-01: Element picker state machine (activation, hover outline + tooltip, Shadow DOM isolation for overlay)
-- [ ] 04-02: Selector Builder overlay (ancestor chain dropdown, class/attribute filters, live preview highlight, Save/Cancel)
+- [ ] 04-01-PLAN.md — Picker state machine, hover outline + tooltip, Shadow DOM banner, click interception, popup activation wiring, manifest update
+- [ ] 04-02-PLAN.md — Selector Builder overlay (ancestor chain dropdown, class/attribute filters, live preview highlight, Save to storage, Cancel/Escape cleanup)
 
 ## Progress
 

@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: in_progress
-stopped_at: Completed 04-01-PLAN.md (element picker hover mode)
-last_updated: "2026-03-23T09:06:05.631Z"
+stopped_at: "Checkpoint: Task 2 human-verify for 04-02 (Selector Builder overlay)"
+last_updated: "2026-03-23T09:10:31.579Z"
 last_activity: "2026-03-22 — Phase 2 plan 04 complete: DEFAULT_DOMAINS for 5 platforms, content.js storage wiring, 60 tests green"
 progress:
   total_phases: 4
-  completed_phases: 3
+  completed_phases: 4
   total_plans: 14
-  completed_plans: 13
+  completed_plans: 14
   percent: 100
 ---
 
@@ -95,6 +95,8 @@ Recent decisions affecting current work:
 - [Phase 04-01]: lib/picker.js dual-role: ES module exports for Jest + window._hrtlPicker for content script — same file serves both consumers without duplication
 - [Phase 04-01]: Named functions for picker event handlers (onPickerMouseMove, onPickerClick, onPickerKeyDown) — required for removeEventListener symmetry with same function reference
 - [Phase 04-01]: window.close() in popup requires jest.fn() mock in tests — jsdom destroys document context on window.close(); production code stays correct
+- [Phase 04]: pickerSave inlines chrome.storage.sync.get/set pattern — content.js cannot import lib/storage.js (plain script vs ES module)
+- [Phase 04]: clearLivePreview() called at start of pickerReset() — ensures no stale data-hrtl-highlight markers remain after cancel/escape/save
 
 ### Roadmap Evolution
 
@@ -112,6 +114,6 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-03-23T09:06:05.629Z
-Stopped at: Completed 04-01-PLAN.md (element picker hover mode)
+Last session: 2026-03-23T09:10:26.999Z
+Stopped at: Checkpoint: Task 2 human-verify for 04-02 (Selector Builder overlay)
 Resume file: None

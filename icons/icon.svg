@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <!-- Blue rounded square background -->
+  <rect width="128" height="128" rx="22" ry="22" fill="#2563EB"/>
+  <!-- Hebrew letter ע (ayin) in white, centered -->
+  <text
+    x="64"
+    y="90"
+    font-family="Arial Hebrew, David, Heebo, serif"
+    font-size="78"
+    font-weight="700"
+    fill="#FFFFFF"
+    text-anchor="middle"
+    dominant-baseline="auto"
+  >ע</text>
+</svg>

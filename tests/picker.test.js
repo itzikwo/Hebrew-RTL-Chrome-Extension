@@ -257,3 +257,252 @@ describe('Escape key', () => {
     }).not.toThrow();
   });
 });
+
+// ---------------------------------------------------------------------------
+// getRelevantAttributes
+// ---------------------------------------------------------------------------
+
+describe('getRelevantAttributes', () => {
+  it('returns data-* and role attributes', () => {
+    const el = document.createElement('div');
+    el.setAttribute('data-testid', 'foo');
+    el.setAttribute('role', 'button');
+    const attrs = pickerModule.getRelevantAttributes(el);
+    expect(attrs).toEqual(expect.arrayContaining([
+      { attr: 'data-testid', value: 'foo' },
+      { attr: 'role', value: 'button' },
+    ]));
+  });
+
+  it('returns aria-* attributes', () => {
+    const el = document.createElement('div');
+    el.setAttribute('aria-label', 'close');
+    const attrs = pickerModule.getRelevantAttributes(el);
+    expect(attrs).toContainEqual({ attr: 'aria-label', value: 'close' });
+  });
+
+  it('does not return non-data/role/aria attributes like class or id', () => {
+    const el = document.createElement('div');
+    el.id = 'myId';
+    el.className = 'myClass';
+    el.setAttribute('data-x', 'val');
+    const attrs = pickerModule.getRelevantAttributes(el);
+    expect(attrs).toHaveLength(1);
+    expect(attrs[0]).toEqual({ attr: 'data-x', value: 'val' });
+  });
+
+  it('returns empty array when element has no relevant attributes', () => {
+    const el = document.createElement('span');
+    const attrs = pickerModule.getRelevantAttributes(el);
+    expect(attrs).toEqual([]);
+  });
+});
+
+// ---------------------------------------------------------------------------
+// livePreviewSelector
+// ---------------------------------------------------------------------------
+
+describe('livePreviewSelector', () => {
+  it('applies data-hrtl-highlight and outline to matching elements', () => {
+    const div = document.createElement('div');
+    div.className = 'target-el';
+    document.body.appendChild(div);
+
+    pickerModule.livePreviewSelector('div.target-el');
+
+    expect(div.getAttribute('data-hrtl-highlight')).toBe('1');
+    expect(div.style.outline).toBe('2px solid #2563EB');
+  });
+
+  it('clears previous highlights before applying new ones', () => {
+    const old = document.createElement('span');
+    old.setAttribute('data-hrtl-highlight', '1');
+    old.style.outline = '2px solid #2563EB';
+    document.body.appendChild(old);
+
+    const newEl = document.createElement('div');
+    newEl.className = 'new-target';
+    document.body.appendChild(newEl);
+
+    pickerModule.livePreviewSelector('div.new-target');
+
+    expect(old.getAttribute('data-hrtl-highlight')).toBeNull();
+    expect(old.style.outline).toBe('');
+    expect(newEl.getAttribute('data-hrtl-highlight')).toBe('1');
+  });
+
+  it('clears all highlights when called with empty string', () => {
+    const el = document.createElement('div');
+    el.setAttribute('data-hrtl-highlight', '1');
+    el.style.outline = '2px solid #2563EB';
+    document.body.appendChild(el);
+
+    pickerModule.livePreviewSelector('');
+
+    expect(el.getAttribute('data-hrtl-highlight')).toBeNull();
+    expect(el.style.outline).toBe('');
+  });
+
+  it('does not throw on invalid CSS selector', () => {
+    expect(() => {
+      pickerModule.livePreviewSelector('::invalid-selector!!');
+    }).not.toThrow();
+  });
+});
+
+// ---------------------------------------------------------------------------
+// pickerOpenOverlay
+// ---------------------------------------------------------------------------
+
+describe('pickerOpenOverlay', () => {
+  it('creates overlay host in the DOM', () => {
+    pickerModule.pickerActivate('example.com');
+    const el = document.createElement('div');
+    el.className = 'test-el';
+    document.body.appendChild(el);
+
+    pickerModule.pickerOpenOverlay(el);
+
+    expect(document.getElementById('hrtl-picker-overlay-host')).not.toBeNull();
+  });
+
+  it('sets picker state to ELEMENT_SELECTED', () => {
+    pickerModule.pickerActivate('example.com');
+    const el = document.createElement('div');
+    document.body.appendChild(el);
+
+    pickerModule.pickerOpenOverlay(el);
+
+    expect(pickerModule.getPickerState()).toBe(pickerModule.PICKER_STATE.ELEMENT_SELECTED);
+  });
+
+  it('overlay shadow root contains required UI elements', () => {
+    pickerModule.pickerActivate('example.com');
+    const el = document.createElement('div');
+    el.className = 'my-el';
+    document.body.appendChild(el);
+
+    pickerModule.pickerOpenOverlay(el);
+
+    const host = document.getElementById('hrtl-picker-overlay-host');
+    const shadow = host.shadowRoot;
+    expect(shadow.querySelector('select')).not.toBeNull();
+    expect(shadow.querySelector('.preview')).not.toBeNull();
+    expect(shadow.querySelector('.save-btn')).not.toBeNull();
+    expect(shadow.querySelector('.cancel-btn')).not.toBeNull();
+    expect(shadow.querySelector('.title').textContent).toBe('Configure Selector');
+  });
+
+  it('ancestor dropdown has correct options for a nested element', () => {
+    pickerModule.pickerActivate('example.com');
+    const parent = document.createElement('div');
+    parent.className = 'parent-el';
+    const child = document.createElement('span');
+    child.className = 'child-el';
+    parent.appendChild(child);
+    document.body.appendChild(parent);
+
+    pickerModule.pickerOpenOverlay(child);
+
+    const host = document.getElementById('hrtl-picker-overlay-host');
+    const shadow = host.shadowRoot;
+    const select = shadow.querySelector('select');
+    // Should have at least 2 options: child and parent
+    expect(select.options.length).toBeGreaterThanOrEqual(2);
+    expect(select.options[0].text).toBe('span.child-el');
+    expect(select.options[1].text).toBe('div.parent-el');
+  });
+
+  it('Cancel button triggers pickerReset', () => {
+    pickerModule.pickerActivate('example.com');
+    const el = document.createElement('div');
+    document.body.appendChild(el);
+
+    pickerModule.pickerOpenOverlay(el);
+
+    const host = document.getElementById('hrtl-picker-overlay-host');
+    const shadow = host.shadowRoot;
+    const cancelBtn = shadow.querySelector('.cancel-btn');
+    cancelBtn.click();
+
+    expect(pickerModule.getPickerState()).toBe(pickerModule.PICKER_STATE.INACTIVE);
+    expect(document.getElementById('hrtl-picker-overlay-host')).toBeNull();
+  });
+});
+
+// ---------------------------------------------------------------------------
+// pickerSave
+// ---------------------------------------------------------------------------
+
+describe('pickerSave', () => {
+  it('writes selector to chrome.storage.sync', async () => {
+    pickerModule.pickerActivate('save-test.com');
+    const el = document.createElement('div');
+    document.body.appendChild(el);
+    pickerModule.pickerOpenOverlay(el);
+
+    // Mock existing config with one selector
+    const existingConfig = { enabled: true, selectors: [{ selector: 'div.old', enabled: true, forceRTL: false }], loadDelay: 0 };
+    globalThis.chrome.storage.sync.get.mockResolvedValue({ 'domains.save-test.com': existingConfig });
+
+    await pickerModule.pickerSave('div.new-selector');
+
+    expect(globalThis.chrome.storage.sync.set).toHaveBeenCalledWith({
+      'domains.save-test.com': expect.objectContaining({
+        selectors: expect.arrayContaining([
+          { selector: 'div.new-selector', enabled: true, forceRTL: false }
+        ])
+      })
+    });
+  });
+
+  it('falls back to chrome.storage.local when sync.set fails', async () => {
+    pickerModule.pickerActivate('fallback-test.com');
+    const el = document.createElement('div');
+    document.body.appendChild(el);
+    pickerModule.pickerOpenOverlay(el);
+
+    globalThis.chrome.storage.sync.get.mockResolvedValue({});
+    globalThis.chrome.storage.sync.set.mockRejectedValue(new Error('sync quota exceeded'));
+
+    await pickerModule.pickerSave('div.fallback-selector');
+
+    expect(globalThis.chrome.storage.local.set).toHaveBeenCalledWith({
+      'domains.fallback-test.com': expect.objectContaining({
+        selectors: expect.arrayContaining([
+          { selector: 'div.fallback-selector', enabled: true, forceRTL: false }
+        ])
+      })
+    });
+  });
+
+  it('resets picker state to INACTIVE after saving', async () => {
+    pickerModule.pickerActivate('reset-test.com');
+    const el = document.createElement('div');
+    document.body.appendChild(el);
+    pickerModule.pickerOpenOverlay(el);
+
+    globalThis.chrome.storage.sync.get.mockResolvedValue({});
+
+    await pickerModule.pickerSave('div.some-selector');
+
+    expect(pickerModule.getPickerState()).toBe(pickerModule.PICKER_STATE.INACTIVE);
+  });
+
+  it('appends new selector to existing selectors array', async () => {
+    pickerModule.pickerActivate('append-test.com');
+    const el = document.createElement('div');
+    document.body.appendChild(el);
+    pickerModule.pickerOpenOverlay(el);
+
+    const existingConfig = { enabled: true, selectors: [{ selector: 'span.existing', enabled: true, forceRTL: false }], loadDelay: 0 };
+    globalThis.chrome.storage.sync.get.mockResolvedValue({ 'domains.append-test.com': existingConfig });
+
+    await pickerModule.pickerSave('div.appended');
+
+    const setCall = globalThis.chrome.storage.sync.set.mock.calls[0][0];
+    const saved = setCall['domains.append-test.com'];
+    expect(saved.selectors).toHaveLength(2);
+    expect(saved.selectors[1]).toEqual({ selector: 'div.appended', enabled: true, forceRTL: false });
+  });
+});

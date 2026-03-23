@@ -72,15 +72,15 @@ const DEBOUNCE_MS = 100;
  */
 function applyDirection(el, dir) {
   if (dir === 'rtl') {
-    el.style.direction = 'rtl';
-    el.style.textAlign = 'right';
+    el.style.setProperty('direction', 'rtl', 'important');
+    el.style.setProperty('text-align', 'right', 'important');
     if (el.tagName === 'LI') {
-      el.style.listStylePosition = 'inside';
+      el.style.setProperty('list-style-position', 'inside', 'important');
     }
   } else {
-    el.style.direction = '';
-    el.style.textAlign = '';
-    el.style.listStylePosition = '';
+    el.style.removeProperty('direction');
+    el.style.removeProperty('text-align');
+    el.style.removeProperty('list-style-position');
   }
   el.setAttribute(MARKER, '1');
 }

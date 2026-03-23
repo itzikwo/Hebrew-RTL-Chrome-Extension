@@ -65,7 +65,7 @@ Plans:
   2. The popup lists all configured selectors with individual enable/disable checkboxes and delete buttons that take effect without a page reload
   3. Hovering over a selector row in the popup causes matching elements on the live page to highlight in real time
   4. The Actions menu lets the user download their entire configuration as a JSON file
-  5. Clicking the Add Selector (+) button creates a new empty selector row ready for the user to activate the element picker
+  5. Clicking the Add Selector (+) button shows a "Coming soon" placeholder message — the element picker that creates new selector rows is delivered in Phase 4
 **Plans**: 3 plans
 
 Plans:

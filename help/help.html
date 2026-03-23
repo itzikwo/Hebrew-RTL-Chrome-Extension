@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hebrew RTL — Help</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      width: 560px;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      margin: 0 auto;
+      padding: 32px 24px 48px;
+      background: #FFFFFF;
+      color: #111827;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    /* Header */
+    .page-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 32px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid #E5E7EB;
+    }
+
+    .page-header h1 {
+      font-size: 20px;
+      font-weight: 700;
+      margin: 0;
+      color: #111827;
+    }
+
+    .version-badge {
+      font-size: 11px;
+      font-weight: 500;
+      color: #6B7280;
+      background: #F3F4F6;
+      border: 1px solid #E5E7EB;
+      border-radius: 4px;
+      padding: 2px 6px;
+      align-self: flex-end;
+      margin-bottom: 2px;
+    }
+
+    /* Section */
+    section {
+      margin-bottom: 32px;
+    }
+
+    h2 {
+      font-size: 15px;
+      font-weight: 600;
+      color: #111827;
+      margin: 0 0 12px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid #E5E7EB;
+    }
+
+    p {
+      margin: 0 0 10px;
+      color: #374151;
+    }
+
+    p:last-child { margin-bottom: 0; }
+
+    /* Steps */
+    ol.steps {
+      margin: 0;
+      padding-left: 20px;
+    }
+
+    ol.steps li {
+      margin-bottom: 8px;
+      color: #374151;
+    }
+
+    ol.steps li:last-child { margin-bottom: 0; }
+
+    /* Site list */
+    .site-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      border: 1px solid #E5E7EB;
+      border-radius: 6px;
+      overflow: hidden;
+    }
+
+    .site-list li {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      padding: 9px 12px;
+      border-bottom: 1px solid #E5E7EB;
+      font-size: 13px;
+    }
+
+    .site-list li:last-child { border-bottom: none; }
+
+    .site-name {
+      font-weight: 600;
+      color: #111827;
+      min-width: 130px;
+    }
+
+    .site-desc {
+      color: #6B7280;
+    }
+
+    /* Key shortcut */
+    kbd {
+      display: inline-block;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 12px;
+      background: #F3F4F6;
+      border: 1px solid #D1D5DB;
+      border-bottom-width: 2px;
+      border-radius: 4px;
+      padding: 1px 6px;
+      color: #374151;
+    }
+
+    /* Tip box */
+    .tip {
+      background: #EFF6FF;
+      border: 1px solid #BFDBFE;
+      border-radius: 6px;
+      padding: 10px 14px;
+      font-size: 13px;
+      color: #1E40AF;
+      margin-top: 12px;
+    }
+
+    /* Warning box */
+    .warning {
+      background: #FFFBEB;
+      border: 1px solid #FDE68A;
+      border-radius: 6px;
+      padding: 10px 14px;
+      font-size: 13px;
+      color: #92400E;
+      margin-top: 12px;
+    }
+
+    /* Troubleshooting table */
+    .trouble-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+
+    .trouble-table th {
+      text-align: left;
+      font-weight: 600;
+      color: #374151;
+      padding: 8px 10px;
+      background: #F9FAFB;
+      border: 1px solid #E5E7EB;
+    }
+
+    .trouble-table td {
+      padding: 9px 10px;
+      border: 1px solid #E5E7EB;
+      vertical-align: top;
+      color: #374151;
+    }
+
+    .trouble-table tr:nth-child(even) td {
+      background: #F9FAFB;
+    }
+
+    /* Inline code */
+    code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 12px;
+      background: #F3F4F6;
+      border: 1px solid #E5E7EB;
+      border-radius: 3px;
+      padding: 1px 4px;
+      color: #374151;
+    }
+
+    /* Footer */
+    .page-footer {
+      margin-top: 40px;
+      padding-top: 16px;
+      border-top: 1px solid #E5E7EB;
+      font-size: 12px;
+      color: #9CA3AF;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="page-header">
+    <h1>Hebrew RTL — Help</h1>
+    <span class="version-badge">v0.2.0</span>
+  </div>
+
+  <!-- What it does -->
+  <section>
+    <h2>What this extension does</h2>
+    <p>Hebrew RTL automatically fixes the text direction of Hebrew content on any website. It works at the individual element level — only the elements containing Hebrew text are changed, leaving the rest of the page untouched.</p>
+    <p>It detects Hebrew using Unicode analysis: if the first strong character is Hebrew, or if 30% or more of a text's letters are Hebrew, the element gets <code>direction: rtl</code> and <code>text-align: right</code>.</p>
+  </section>
+
+  <!-- Pre-configured sites -->
+  <section>
+    <h2>Pre-configured sites</h2>
+    <p>These sites work out of the box — no setup required:</p>
+    <ul class="site-list">
+      <li>
+        <span class="site-name">ChatGPT</span>
+        <span class="site-desc">chatgpt.com — AI assistant responses &amp; user messages</span>
+      </li>
+      <li>
+        <span class="site-name">Claude</span>
+        <span class="site-desc">claude.ai — response paragraphs &amp; user message divs</span>
+      </li>
+      <li>
+        <span class="site-name">Google Gemini</span>
+        <span class="site-desc">gemini.google.com — message content &amp; markdown responses</span>
+      </li>
+      <li>
+        <span class="site-name">NotebookLM</span>
+        <span class="site-desc">notebooklm.google.com — chat message containers</span>
+      </li>
+      <li>
+        <span class="site-name">Slack</span>
+        <span class="site-desc">app.slack.com — rich text sections in messages</span>
+      </li>
+    </ul>
+  </section>
+
+  <!-- Turning it on/off -->
+  <section>
+    <h2>Turning RTL correction on or off</h2>
+    <p><strong>Master toggle</strong> — The toggle switch at the top of the popup enables or disables all RTL corrections for the current website. When it is off, the selector list dims and no changes are applied.</p>
+    <p><strong>Per-selector toggle</strong> — Each row in the selector list has its own checkbox. Uncheck a row to disable that specific selector while keeping others active.</p>
+    <p><strong>Keyboard shortcut</strong> — Press <kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>H</kbd> (or <kbd>⌃</kbd>+<kbd>Shift</kbd>+<kbd>H</kbd> on Mac) to toggle the master switch for the current domain without opening the popup.</p>
+    <div class="tip">To change the keyboard shortcut, open the Actions menu → Keyboard Shortcuts. This opens Chrome's built-in extension shortcuts page.</div>
+  </section>
+
+  <!-- Adding a custom selector -->
+  <section>
+    <h2>Adding a selector for a new site</h2>
+    <p>Use the visual element picker to target specific elements on any page:</p>
+    <ol class="steps">
+      <li>Navigate to the website you want to fix.</li>
+      <li>Click the extension icon to open the popup, then click <strong>+ Add Selector</strong>. The popup closes and picker mode activates.</li>
+      <li>Hover over the page — elements highlight in amber as your cursor moves over them. A tooltip shows the element's tag, class, and CSS selector.</li>
+      <li>Click the element you want to fix. The <strong>Selector Builder</strong> overlay appears.</li>
+      <li>Use the <strong>ancestor dropdown</strong> to choose how broad the selector should be (the element itself, its parent, grandparent, etc.).</li>
+      <li>Optionally check/uncheck <strong>class filters</strong> and <strong>attribute filters</strong> to make the selector more specific.</li>
+      <li>The live preview shows the CSS selector and highlights all currently matched elements on the page.</li>
+      <li>Click <strong>Save Selector</strong>. The selector is saved and RTL correction applies immediately.</li>
+    </ol>
+    <div class="tip">New selectors default to <strong>Force RTL</strong> mode — RTL is always applied regardless of content detection. This is the safest default for user-selected elements.</div>
+  </section>
+
+  <!-- Force RTL vs Auto-detect -->
+  <section>
+    <h2>Force RTL vs Auto-detect</h2>
+    <p>Each selector operates in one of two modes:</p>
+    <p><strong>Auto-detect</strong> — The extension analyses the text inside each element. RTL is applied only if the text is detected as Hebrew (first strong character is Hebrew, or ≥ 30% Hebrew letters). Mixed or purely LTR content is left unchanged.</p>
+    <p><strong>Force RTL</strong> — RTL direction is always applied to all matched elements, regardless of content. Use this when auto-detection misses elements or when you always want RTL for a specific section.</p>
+  </section>
+
+  <!-- Export / Import -->
+  <section>
+    <h2>Backing up and restoring your configuration</h2>
+    <p>Open the popup, click <strong>Actions ▾</strong>, then choose <strong>Export Config</strong>. A JSON file named <code>hebrew-rtl-config-YYYY-MM-DD.json</code> is downloaded containing all your domain configurations.</p>
+    <p>Your settings also sync automatically across devices via Chrome's built-in sync storage — any device signed into the same Chrome profile will have the same configuration.</p>
+    <div class="warning">Import from file is not yet available. To restore a backup, you will need to re-add selectors manually using the picker.</div>
+  </section>
+
+  <!-- Managing selectors -->
+  <section>
+    <h2>Managing selectors</h2>
+    <p><strong>Delete a selector</strong> — Click the red × button on the right side of any selector row.</p>
+    <p><strong>Delete all selectors for a site</strong> — Open Actions ▾ → Delete All Selectors, then confirm. This clears the entire configuration for the current domain only.</p>
+    <p><strong>Hover to highlight</strong> — Hover over any selector row in the popup to see all elements it currently matches, outlined in blue on the page.</p>
+  </section>
+
+  <!-- Troubleshooting -->
+  <section>
+    <h2>Troubleshooting</h2>
+    <table class="trouble-table">
+      <thead>
+        <tr>
+          <th>Problem</th>
+          <th>What to check</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>RTL correction is not being applied</td>
+          <td>Check that the master toggle is <strong>on</strong> and that at least one selector row is enabled (checkbox checked).</td>
+        </tr>
+        <tr>
+          <td>Hebrew text is still showing LTR</td>
+          <td>The selector may not be matching the right element. Use <strong>+ Add Selector</strong> to pick the exact element, or hover a selector row to see what it currently targets.</td>
+        </tr>
+        <tr>
+          <td>RTL applied to non-Hebrew text</td>
+          <td>The selector is in Force RTL mode. Disable that selector row, or re-add the selector with a narrower CSS path using the picker's ancestor dropdown.</td>
+        </tr>
+        <tr>
+          <td>Content loads after the page and misses RTL</td>
+          <td>The extension watches for DOM changes automatically. If content still misses, try reloading the page. (Configurable load delay coming in a future update.)</td>
+        </tr>
+        <tr>
+          <td>Popup shows "Not available on this page"</td>
+          <td>The extension only runs on <code>http://</code> and <code>https://</code> pages. It cannot run on Chrome system pages (<code>chrome://</code>), the New Tab page, or local files.</td>
+        </tr>
+        <tr>
+          <td>Keyboard shortcut does not work</td>
+          <td>Another extension may have claimed the same shortcut. Go to Actions ▾ → Keyboard Shortcuts to reassign it.</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <div class="page-footer">
+    Hebrew RTL v0.2.0 &nbsp;·&nbsp; <a href="https://github.com/itzikwo/Hebrew-RTL-Chrome-Extension" style="color:#9CA3AF;">GitHub</a>
+  </div>
+
+</body>
+</html>

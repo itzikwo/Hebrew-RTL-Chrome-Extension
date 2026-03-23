@@ -175,6 +175,14 @@ export function renderPopup(hostname, config, tabId) {
     });
   }
 
+  const helpBtn = document.querySelector('[data-action="help"]');
+  if (helpBtn) {
+    helpBtn.addEventListener('click', () => {
+      if (actionsMenu) actionsMenu.hidden = true;
+      chrome.tabs.create({ url: chrome.runtime.getURL('help/help.html') });
+    });
+  }
+
   // Close actions menu on outside click
   document.addEventListener('click', (e) => {
     const menu = document.getElementById('actions-menu');

@@ -450,7 +450,7 @@ describe('pickerSave', () => {
     expect(globalThis.chrome.storage.sync.set).toHaveBeenCalledWith({
       'domains.save-test.com': expect.objectContaining({
         selectors: expect.arrayContaining([
-          { selector: 'div.new-selector', enabled: true, forceRTL: false }
+          { selector: 'div.new-selector', enabled: true, forceRTL: true }
         ])
       })
     });
@@ -470,7 +470,7 @@ describe('pickerSave', () => {
     expect(globalThis.chrome.storage.local.set).toHaveBeenCalledWith({
       'domains.fallback-test.com': expect.objectContaining({
         selectors: expect.arrayContaining([
-          { selector: 'div.fallback-selector', enabled: true, forceRTL: false }
+          { selector: 'div.fallback-selector', enabled: true, forceRTL: true }
         ])
       })
     });
@@ -503,6 +503,6 @@ describe('pickerSave', () => {
     const setCall = globalThis.chrome.storage.sync.set.mock.calls[0][0];
     const saved = setCall['domains.append-test.com'];
     expect(saved.selectors).toHaveLength(2);
-    expect(saved.selectors[1]).toEqual({ selector: 'div.appended', enabled: true, forceRTL: false });
+    expect(saved.selectors[1]).toEqual({ selector: 'div.appended', enabled: true, forceRTL: true });
   });
 });

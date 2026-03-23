@@ -66,11 +66,12 @@ Plans:
   3. Hovering over a selector row in the popup causes matching elements on the live page to highlight in real time
   4. The Actions menu lets the user download their entire configuration as a JSON file
   5. Clicking the Add Selector (+) button creates a new empty selector row ready for the user to activate the element picker
-**Plans**: 2 plans
+**Plans**: 3 plans
 
 Plans:
 - [ ] 03-01-PLAN.md — Popup shell: HTML/CSS structure, popup.js core logic (domain header, master toggle, selector list with checkboxes and delete, Add Selector placeholder), manifest wiring, unit tests
 - [ ] 03-02-PLAN.md — Interactive features: real-time hover highlights (content.js handlers + popup wiring), Actions menu (Export JSON, Delete All with confirm dialog, Keyboard Shortcuts link)
+- [ ] 03-03-PLAN.md — Gap closure: update ROADMAP and REQUIREMENTS to reflect placeholder Add Selector delivery and Phase 4 picker deferral
 
 ### Phase 4: Visual Element Picker
 **Goal**: A non-technical user can configure Hebrew correction for any website by clicking elements on the page — no DevTools required
@@ -96,5 +97,5 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4
 |-------|----------------|--------|-----------|
 | 1. RTL Engine | 4/4 | Complete | 2026-03-22 |
 | 2. Extension Wiring and Pre-configured Sites | 5/5 | Complete    | 2026-03-22 |
-| 3. Popup UI and Config Actions | 2/2 | Complete   | 2026-03-23 |
+| 3. Popup UI and Config Actions | 2/3 | Gap closure pending   | 2026-03-23 |
 | 4. Visual Element Picker | 0/2 | Not started | - |

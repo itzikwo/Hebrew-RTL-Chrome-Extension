@@ -71,7 +71,7 @@ Plans:
 Plans:
 - [ ] 03-01-PLAN.md — Popup shell: HTML/CSS structure, popup.js core logic (domain header, master toggle, selector list with checkboxes and delete, Add Selector placeholder), manifest wiring, unit tests
 - [ ] 03-02-PLAN.md — Interactive features: real-time hover highlights (content.js handlers + popup wiring), Actions menu (Export JSON, Delete All with confirm dialog, Keyboard Shortcuts link)
-- [ ] 03-03-PLAN.md — Gap closure: update ROADMAP and REQUIREMENTS to reflect placeholder Add Selector delivery and Phase 4 picker deferral
+- [x] 03-03-PLAN.md — Gap closure: update ROADMAP and REQUIREMENTS to reflect placeholder Add Selector delivery and Phase 4 picker deferral (completed 2026-03-23)
 
 ### Phase 4: Visual Element Picker
 **Goal**: A non-technical user can configure Hebrew correction for any website by clicking elements on the page — no DevTools required

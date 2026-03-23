@@ -3,8 +3,8 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: in_progress
-stopped_at: "Checkpoint: Task 2 human-verify for 04-02 (Selector Builder overlay)"
-last_updated: "2026-03-23T09:10:31.579Z"
+stopped_at: "Completed 04-02: Selector Builder overlay + manifest type:module bug fix"
+last_updated: "2026-03-23T10:00:08.424Z"
 last_activity: "2026-03-22 — Phase 2 plan 04 complete: DEFAULT_DOMAINS for 5 platforms, content.js storage wiring, 60 tests green"
 progress:
   total_phases: 4
@@ -57,6 +57,7 @@ Progress: [██████████] 100% of Phase 2
 | Phase 03 P02 | 6min | 3 tasks | 4 files |
 | Phase 03-popup-ui-and-config-actions P03-03 | 1min | 2 tasks | 2 files |
 | Phase 04-visual-element-picker P01 | 4min | 2 tasks | 6 files |
+| Phase 04-visual-element-picker P02 | 25min | 2 tasks | 3 files |
 
 ## Accumulated Context
 
@@ -97,6 +98,7 @@ Recent decisions affecting current work:
 - [Phase 04-01]: window.close() in popup requires jest.fn() mock in tests — jsdom destroys document context on window.close(); production code stays correct
 - [Phase 04]: pickerSave inlines chrome.storage.sync.get/set pattern — content.js cannot import lib/storage.js (plain script vs ES module)
 - [Phase 04]: clearLivePreview() called at start of pickerReset() — ensures no stale data-hrtl-highlight markers remain after cancel/escape/save
+- [Phase 04-02]: content_scripts requires type:module because lib/picker.js has static export{} statements — plain classic script SyntaxErrors on export keyword, window._hrtlPicker never set, PICKER_ACTIVATE silently does nothing
 
 ### Roadmap Evolution
 
@@ -114,6 +116,6 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-03-23T09:10:26.999Z
-Stopped at: Checkpoint: Task 2 human-verify for 04-02 (Selector Builder overlay)
+Last session: 2026-03-23T10:00:08.415Z
+Stopped at: Completed 04-02: Selector Builder overlay + manifest type:module bug fix
 Resume file: None

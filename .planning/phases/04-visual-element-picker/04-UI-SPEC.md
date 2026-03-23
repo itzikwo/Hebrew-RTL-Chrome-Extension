@@ -1,10 +1,11 @@
 ---
 phase: 4
 slug: visual-element-picker
-status: draft
+status: approved
 shadcn_initialized: false
 preset: none
 created: 2026-03-23
+reviewed_at: 2026-03-23
 ---
 
 # Phase 4 — UI Design Contract

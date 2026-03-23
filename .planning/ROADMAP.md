@@ -97,5 +97,5 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4
 |-------|----------------|--------|-----------|
 | 1. RTL Engine | 4/4 | Complete | 2026-03-22 |
 | 2. Extension Wiring and Pre-configured Sites | 5/5 | Complete    | 2026-03-22 |
-| 3. Popup UI and Config Actions | 2/3 | Gap closure pending   | 2026-03-23 |
+| 3. Popup UI and Config Actions | 3/3 | Complete   | 2026-03-23 |
 | 4. Visual Element Picker | 0/2 | Not started | - |

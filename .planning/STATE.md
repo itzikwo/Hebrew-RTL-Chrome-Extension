@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: in_progress
-stopped_at: Completed 03-02-PLAN.md — popup interactive features + actions menu, 93 tests green
-last_updated: "2026-03-23T07:20:24.852Z"
+stopped_at: "Completed 03-03-PLAN.md — gap closure: ROADMAP and REQUIREMENTS updated for POP-02/POP-03 Phase 4 deferral"
+last_updated: "2026-03-23T07:45:14.202Z"
 last_activity: "2026-03-22 — Phase 2 plan 04 complete: DEFAULT_DOMAINS for 5 platforms, content.js storage wiring, 60 tests green"
 progress:
   total_phases: 4
   completed_phases: 3
-  total_plans: 11
-  completed_plans: 11
+  total_plans: 12
+  completed_plans: 12
   percent: 100
 ---
 
@@ -55,6 +55,7 @@ Progress: [██████████] 100% of Phase 2
 | Phase 02-04 P04 | 15 min | 2 tasks | 3 files |
 | Phase 03 P01 | 8min | 3 tasks | 5 files |
 | Phase 03 P02 | 6min | 3 tasks | 4 files |
+| Phase 03-popup-ui-and-config-actions P03-03 | 1min | 2 tasks | 2 files |
 
 ## Accumulated Context
 
@@ -89,6 +90,7 @@ Recent decisions affecting current work:
 - [Phase 03]: tabs.create added to createChromeMock() for Keyboard Shortcuts action forward compatibility
 - [Phase 03]: ESM module caching: content.js onMessage listener captured once per describe block — import fires only once in Jest
 - [Phase 03]: renderPopup syncs _tabId/_hostname/_config module-level state — enables tests calling renderPopup directly to work with window unload handler
+- [Phase 03-popup-ui-and-config-actions]: Phase 3 delivers Add Selector (+) as a Coming soon placeholder — element picker activation is Phase 4 scope (PICK-01)
 
 ### Roadmap Evolution
 
@@ -106,6 +108,6 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-03-23T07:20:24.849Z
-Stopped at: Completed 03-02-PLAN.md — popup interactive features + actions menu, 93 tests green
+Last session: 2026-03-23T07:45:14.200Z
+Stopped at: Completed 03-03-PLAN.md — gap closure: ROADMAP and REQUIREMENTS updated for POP-02/POP-03 Phase 4 deferral
 Resume file: None

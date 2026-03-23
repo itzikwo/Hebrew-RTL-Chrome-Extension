@@ -14,7 +14,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 
 - [ ] **Phase 1: RTL Engine** - Hebrew detection and per-element RTL application with all edge-case handling
 - [x] **Phase 2: Extension Wiring and Pre-configured Sites** - Storage schema, five pre-configured platforms, keyboard shortcut, and background service worker (completed 2026-03-22)
-- [ ] **Phase 3: Popup UI and Config Actions** - Full popup control surface, per-selector controls, and JSON export
+- [x] **Phase 3: Popup UI and Config Actions** - Full popup control surface, per-selector controls, and JSON export (completed 2026-03-23)
 - [ ] **Phase 4: Visual Element Picker** - Interactive element picker and Selector Builder overlay for no-DevTools site configuration
 
 ## Phase Details
@@ -96,5 +96,5 @@ Phases execute in numeric order: 1 -> 2 -> 3 -> 4
 |-------|----------------|--------|-----------|
 | 1. RTL Engine | 4/4 | Complete | 2026-03-22 |
 | 2. Extension Wiring and Pre-configured Sites | 5/5 | Complete    | 2026-03-22 |
-| 3. Popup UI and Config Actions | 1/2 | In Progress|  |
+| 3. Popup UI and Config Actions | 2/2 | Complete   | 2026-03-23 |
 | 4. Visual Element Picker | 0/2 | Not started | - |

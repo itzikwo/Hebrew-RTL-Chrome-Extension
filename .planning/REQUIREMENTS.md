@@ -24,7 +24,7 @@
 - [x] **CFG-02**: Extension ships pre-configured selectors for ChatGPT (chatgpt.com), Claude.ai, Google Gemini (gemini.google.com), NotebookLM (notebooklm.google.com), and Slack (app.slack.com) (FR-101)
 - [x] **CFG-03**: Extension supports configurable load delay (milliseconds) per domain for sites with late-loading content (FR-106)
 - [x] **CFG-04**: Extension auto-saves all configuration changes immediately without requiring an explicit save action (FR-107)
-- [ ] **CFG-05**: Extension supports configuration export as a downloadable JSON file (FR-108)
+- [x] **CFG-05**: Extension supports configuration export as a downloadable JSON file (FR-108)
 
 ### Element Picker
 
@@ -37,8 +37,8 @@
 - [x] **POP-01**: Popup shows current domain name and master enable/disable toggle prominently at the top (FR-200)
 - [x] **POP-02**: Popup lists all configured selectors for the current domain with: enable/disable checkbox, delete button, and element picker trigger per row (FR-201)
 - [x] **POP-03**: Popup includes an Add Selector button (+) that creates a new empty selector row ready for picker activation (FR-202)
-- [ ] **POP-04**: Hovering over a selector row in the popup highlights matching elements on the page in real time (FR-203)
-- [ ] **POP-05**: Popup includes an Actions menu with: Export Config, Delete All Selectors, User Guide link, and Keyboard Shortcut configuration (FR-204)
+- [x] **POP-04**: Hovering over a selector row in the popup highlights matching elements on the page in real time (FR-203)
+- [x] **POP-05**: Popup includes an Actions menu with: Export Config, Delete All Selectors, User Guide link, and Keyboard Shortcut configuration (FR-204)
 
 ### Keyboard Shortcuts
 
@@ -108,15 +108,15 @@
 | CFG-02 | Phase 2 | Complete |
 | CFG-03 | Phase 2 | Complete |
 | CFG-04 | Phase 2 | Complete |
-| CFG-05 | Phase 3 | Pending |
+| CFG-05 | Phase 3 | Complete |
 | PICK-01 | Phase 4 | Pending |
 | PICK-02 | Phase 4 | Pending |
 | PICK-03 | Phase 4 | Pending |
 | POP-01 | Phase 3 | Complete |
 | POP-02 | Phase 3 | Complete |
 | POP-03 | Phase 3 | Complete |
-| POP-04 | Phase 3 | Pending |
-| POP-05 | Phase 3 | Pending |
+| POP-04 | Phase 3 | Complete |
+| POP-05 | Phase 3 | Complete |
 | KBD-01 | Phase 2 | Complete |
 | KBD-02 | Phase 2 | Complete |
 

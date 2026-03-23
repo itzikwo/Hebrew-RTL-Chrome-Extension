@@ -3,14 +3,14 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: in_progress
-stopped_at: Completed 03-01-PLAN.md — popup UI shell, 72 tests green
-last_updated: "2026-03-23T07:11:27.702Z"
+stopped_at: Completed 03-02-PLAN.md — popup interactive features + actions menu, 93 tests green
+last_updated: "2026-03-23T07:20:24.852Z"
 last_activity: "2026-03-22 — Phase 2 plan 04 complete: DEFAULT_DOMAINS for 5 platforms, content.js storage wiring, 60 tests green"
 progress:
   total_phases: 4
-  completed_phases: 2
+  completed_phases: 3
   total_plans: 11
-  completed_plans: 10
+  completed_plans: 11
   percent: 100
 ---
 
@@ -54,6 +54,7 @@ Progress: [██████████] 100% of Phase 2
 | Phase 02-03 P03 | 8 min | 1 task | 3 files |
 | Phase 02-04 P04 | 15 min | 2 tasks | 3 files |
 | Phase 03 P01 | 8min | 3 tasks | 5 files |
+| Phase 03 P02 | 6min | 3 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -86,6 +87,8 @@ Recent decisions affecting current work:
 - [Phase 03]: Clone-and-replace DOM nodes on each renderPopup call prevents duplicate event listener accumulation
 - [Phase 03]: Export initPopup, renderPopup, renderSelectorRow for testability — no DOMContentLoaded coupling in tests
 - [Phase 03]: tabs.create added to createChromeMock() for Keyboard Shortcuts action forward compatibility
+- [Phase 03]: ESM module caching: content.js onMessage listener captured once per describe block — import fires only once in Jest
+- [Phase 03]: renderPopup syncs _tabId/_hostname/_config module-level state — enables tests calling renderPopup directly to work with window unload handler
 
 ### Roadmap Evolution
 
@@ -103,6 +106,6 @@ None.
 
 ## Session Continuity
 
-Last session: 2026-03-23T07:11:27.700Z
-Stopped at: Completed 03-01-PLAN.md — popup UI shell, 72 tests green
+Last session: 2026-03-23T07:20:24.849Z
+Stopped at: Completed 03-02-PLAN.md — popup interactive features + actions menu, 93 tests green
 Resume file: None

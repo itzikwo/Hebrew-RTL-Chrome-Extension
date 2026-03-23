@@ -1,0 +1,105 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 800" width="1280" height="800">
+  <defs>
+    <linearGradient id="sidebar" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#171717"/>
+      <stop offset="100%" style="stop-color:#212121"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Page background -->
+  <rect width="1280" height="800" fill="#FFFFFF"/>
+
+  <!-- Browser chrome -->
+  <rect width="1280" height="40" fill="#F2F2F2"/>
+  <circle cx="18" cy="20" r="6" fill="#FF5F57"/>
+  <circle cx="38" cy="20" r="6" fill="#FEBC2E"/>
+  <circle cx="58" cy="20" r="6" fill="#28C840"/>
+  <rect x="80" y="6" width="220" height="28" rx="6" fill="#FFFFFF"/>
+  <text x="100" y="24" font-family="-apple-system,sans-serif" font-size="12" fill="#333">ChatGPT</text>
+  <rect x="320" y="10" width="640" height="20" rx="10" fill="#E9E9E9"/>
+  <text x="640" y="24" font-family="-apple-system,sans-serif" font-size="12" fill="#666" text-anchor="middle">chatgpt.com</text>
+
+  <!-- ChatGPT sidebar -->
+  <rect x="0" y="40" width="260" height="760" fill="url(#sidebar)"/>
+  <text x="24" y="82" font-family="-apple-system,sans-serif" font-size="16" font-weight="700" fill="#FFFFFF">ChatGPT</text>
+  <rect x="16" y="98" width="228" height="36" rx="8" fill="#FFFFFF" opacity="0.1"/>
+  <text x="32" y="121" font-family="-apple-system,sans-serif" font-size="13" fill="#FFFFFF" opacity="0.8">+ New chat</text>
+  <text x="16" y="164" font-family="-apple-system,sans-serif" font-size="11" fill="#FFFFFF" opacity="0.4">Recent</text>
+  <text x="16" y="190" font-family="-apple-system,sans-serif" font-size="13" fill="#FFFFFF" opacity="0.7">Hebrew translation help</text>
+  <text x="16" y="216" font-family="-apple-system,sans-serif" font-size="13" fill="#FFFFFF" opacity="0.5">Explain this code...</text>
+  <text x="16" y="242" font-family="-apple-system,sans-serif" font-size="13" fill="#FFFFFF" opacity="0.5">Weekly schedule</text>
+
+  <!-- Chat area -->
+  <rect x="260" y="40" width="1020" height="760" fill="#FFFFFF"/>
+
+  <!-- Chat messages -->
+  <!-- User message -->
+  <rect x="700" y="100" width="500" height="52" rx="16" fill="#F4F4F4"/>
+  <text x="720" y="122" font-family="-apple-system,sans-serif" font-size="14" fill="#111">תוכל לעזור לי לתרגם את המשפט הבא?</text>
+  <text x="720" y="142" font-family="-apple-system,sans-serif" font-size="14" fill="#111">אני צריך עזרה עם עברית.</text>
+
+  <!-- Assistant label -->
+  <circle cx="300" cy="200" r="16" fill="#19C37D"/>
+  <text x="300" y="205" font-family="-apple-system,sans-serif" font-size="12" font-weight="700" fill="#FFFFFF" text-anchor="middle">G</text>
+  <text x="328" y="198" font-family="-apple-system,sans-serif" font-size="13" font-weight="600" fill="#111">ChatGPT</text>
+
+  <!-- Assistant response (Hebrew, RTL-corrected) -->
+  <text x="328" y="228" font-family="Arial Hebrew,David,serif" font-size="15" fill="#111" text-anchor="start" direction="rtl" unicode-bidi="embed">בוודאי! אשמח לעזור לך עם התרגום.</text>
+  <text x="328" y="252" font-family="Arial Hebrew,David,serif" font-size="15" fill="#111" text-anchor="start" direction="rtl" unicode-bidi="embed">אנא שתף את המשפט שאתה רוצה לתרגם</text>
+  <text x="328" y="276" font-family="Arial Hebrew,David,serif" font-size="15" fill="#111" text-anchor="start" direction="rtl" unicode-bidi="embed">ואציין את המקור והיעד.</text>
+
+  <!-- RTL badge -->
+  <rect x="328" y="290" width="72" height="20" rx="4" fill="#DCFCE7"/>
+  <text x="364" y="304" font-family="-apple-system,sans-serif" font-size="10" font-weight="600" fill="#166534" text-anchor="middle">RTL ✓</text>
+
+  <!-- Input area -->
+  <rect x="280" y="720" width="980" height="56" rx="12" fill="#F4F4F4" stroke="#E5E5E5" stroke-width="1"/>
+  <text x="310" y="752" font-family="-apple-system,sans-serif" font-size="14" fill="#9CA3AF">Message ChatGPT</text>
+
+  <!-- ━━━ Extension Popup ━━━ -->
+  <!-- Shadow -->
+  <rect x="885" y="360" width="298" height="350" rx="12" fill="#000" opacity="0.2"/>
+  <!-- Popup card -->
+  <rect x="878" y="353" width="298" height="350" rx="12" fill="#FFFFFF" stroke="#E5E7EB" stroke-width="1"/>
+
+  <!-- Header -->
+  <rect x="878" y="353" width="298" height="52" rx="12" fill="#F9FAFB"/>
+  <rect x="878" y="381" width="298" height="24" fill="#F9FAFB"/>
+  <text x="898" y="384" font-family="-apple-system,sans-serif" font-size="13" font-weight="600" fill="#111827">chatgpt.com</text>
+  <!-- Toggle ON -->
+  <rect x="1122" y="368" width="36" height="20" rx="10" fill="#2563EB"/>
+  <circle cx="1148" cy="378" r="7" fill="#FFFFFF"/>
+  <line x1="878" y1="405" x2="1176" y2="405" stroke="#E5E7EB" stroke-width="1"/>
+
+  <!-- Selector rows -->
+  <rect x="878" y="405" width="298" height="44" fill="#FFFFFF"/>
+  <rect x="893" y="422" width="10" height="10" rx="2" fill="#2563EB"/>
+  <text x="910" y="431" font-family="ui-monospace,Menlo,monospace" font-size="11" fill="#374151">.markdown p</text>
+  <text x="1159" y="431" font-family="-apple-system,sans-serif" font-size="14" fill="#DC2626" text-anchor="middle">×</text>
+  <line x1="878" y1="449" x2="1176" y2="449" stroke="#E5E7EB" stroke-width="1"/>
+
+  <rect x="878" y="449" width="298" height="44" fill="#EFF6FF"/>
+  <rect x="893" y="466" width="10" height="10" rx="2" fill="#2563EB"/>
+  <text x="910" y="475" font-family="ui-monospace,Menlo,monospace" font-size="11" fill="#1D4ED8">[data-message] p</text>
+  <text x="1159" y="475" font-family="-apple-system,sans-serif" font-size="14" fill="#DC2626" text-anchor="middle">×</text>
+  <line x1="878" y1="493" x2="1176" y2="493" stroke="#E5E7EB" stroke-width="1"/>
+
+  <rect x="878" y="493" width="298" height="44" fill="#FFFFFF"/>
+  <rect x="893" y="510" width="10" height="10" rx="2" fill="#2563EB"/>
+  <text x="910" y="519" font-family="ui-monospace,Menlo,monospace" font-size="11" fill="#374151">.whitespace-pre-wrap</text>
+  <text x="1159" y="519" font-family="-apple-system,sans-serif" font-size="14" fill="#DC2626" text-anchor="middle">×</text>
+  <line x1="878" y1="537" x2="1176" y2="537" stroke="#E5E7EB" stroke-width="1"/>
+
+  <!-- Footer -->
+  <rect x="878" y="537" width="298" height="166" rx="0" fill="#FFFFFF"/>
+  <rect x="878" y="665" width="298" height="38" rx="12" fill="#FFFFFF"/>
+  <rect x="878" y="653" width="298" height="26" fill="#FFFFFF"/>
+  <rect x="892" y="548" width="124" height="32" rx="6" fill="#FFFFFF" stroke="#E5E7EB" stroke-width="1"/>
+  <text x="954" y="569" font-family="-apple-system,sans-serif" font-size="13" fill="#111827" text-anchor="middle">+ Add Selector</text>
+  <rect x="1028" y="548" width="134" height="32" rx="6" fill="#FFFFFF" stroke="#E5E7EB" stroke-width="1"/>
+  <text x="1095" y="569" font-family="-apple-system,sans-serif" font-size="13" fill="#111827" text-anchor="middle">Actions ▾</text>
+
+  <!-- Callout label -->
+  <rect x="280" y="56" width="320" height="32" rx="6" fill="#2563EB"/>
+  <text x="440" y="77" font-family="-apple-system,sans-serif" font-size="14" font-weight="600" fill="#FFFFFF" text-anchor="middle">Hebrew RTL — Popup open on ChatGPT</text>
+</svg>

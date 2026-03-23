@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 440 280" width="440" height="280">
+  <!-- Background -->
+  <rect width="440" height="280" fill="#1D4ED8"/>
+
+  <!-- Subtle grid texture -->
+  <defs>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#2563EB" stroke-width="1"/>
+    </pattern>
+  </defs>
+  <rect width="440" height="280" fill="url(#grid)"/>
+
+  <!-- Icon background pill -->
+  <rect x="32" y="88" width="80" height="80" rx="16" fill="#2563EB" opacity="0.6"/>
+  <!-- Icon letter ע -->
+  <text x="72" y="147" font-family="Arial Hebrew, David, serif" font-size="52" font-weight="700" fill="#FFFFFF" text-anchor="middle">ע</text>
+
+  <!-- Main headline -->
+  <text x="136" y="122" font-family="system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="32" font-weight="700" fill="#FFFFFF">Hebrew RTL</text>
+
+  <!-- Sub-headline -->
+  <text x="136" y="152" font-family="system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="15" font-weight="400" fill="#BFDBFE">Automatic Hebrew text direction</text>
+  <text x="136" y="172" font-family="system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="15" font-weight="400" fill="#BFDBFE">correction for any website</text>
+
+  <!-- Divider -->
+  <line x1="32" y1="204" x2="408" y2="204" stroke="#3B82F6" stroke-width="1"/>
+
+  <!-- Feature pills -->
+  <!-- Pill 1 -->
+  <rect x="32" y="218" width="108" height="28" rx="14" fill="#2563EB"/>
+  <text x="86" y="236" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="500" fill="#FFFFFF" text-anchor="middle">ChatGPT</text>
+
+  <!-- Pill 2 -->
+  <rect x="148" y="218" width="72" height="28" rx="14" fill="#2563EB"/>
+  <text x="184" y="236" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="500" fill="#FFFFFF" text-anchor="middle">Claude</text>
+
+  <!-- Pill 3 -->
+  <rect x="228" y="218" width="72" height="28" rx="14" fill="#2563EB"/>
+  <text x="264" y="236" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="500" fill="#FFFFFF" text-anchor="middle">Gemini</text>
+
+  <!-- Pill 4 -->
+  <rect x="308" y="218" width="56" height="28" rx="14" fill="#2563EB"/>
+  <text x="336" y="236" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="500" fill="#FFFFFF" text-anchor="middle">Slack</text>
+
+  <!-- Pill 5 -->
+  <rect x="372" y="218" width="36" height="28" rx="14" fill="#2563EB"/>
+  <text x="390" y="236" font-family="system-ui, -apple-system, sans-serif" font-size="12" font-weight="500" fill="#FFFFFF" text-anchor="middle">…</text>
+</svg>

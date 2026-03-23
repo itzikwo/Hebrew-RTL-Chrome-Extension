@@ -247,6 +247,7 @@ if (typeof chrome !== 'undefined') {
   });
 
   // Handle keyboard shortcut toggle from background.js
+  let _highlightTimer = null;
   chrome.runtime.onMessage.addListener((msg, _sender, sendResponse) => {
     if (msg.type === 'TOGGLE_DOMAIN') {
       const key = `domains.${location.hostname}`;
@@ -260,6 +261,36 @@ if (typeof chrome !== 'undefined') {
     }
     if (msg.type === 'PING') {
       sendResponse({ ready: true });
+    }
+    if (msg.type === 'HIGHLIGHT_SELECTOR') {
+      // Clear any existing highlights first
+      document.querySelectorAll('[data-hrtl-highlight]').forEach(el => {
+        el.style.outline = '';
+        el.removeAttribute('data-hrtl-highlight');
+      });
+      try {
+        document.querySelectorAll(msg.selector).forEach(el => {
+          el.style.outline = '2px solid #2563EB';
+          el.setAttribute('data-hrtl-highlight', '1');
+        });
+      } catch (_) { /* invalid selector — silently ignore */ }
+      // Belt-and-suspenders: auto-clear after 5 seconds if no new message arrives
+      clearTimeout(_highlightTimer);
+      _highlightTimer = setTimeout(() => {
+        document.querySelectorAll('[data-hrtl-highlight]').forEach(el => {
+          el.style.outline = '';
+          el.removeAttribute('data-hrtl-highlight');
+        });
+      }, 5000);
+      sendResponse({ ok: true });
+    }
+    if (msg.type === 'CLEAR_HIGHLIGHT') {
+      clearTimeout(_highlightTimer);
+      document.querySelectorAll('[data-hrtl-highlight]').forEach(el => {
+        el.style.outline = '';
+        el.removeAttribute('data-hrtl-highlight');
+      });
+      sendResponse({ ok: true });
     }
     return true; // Keep message channel open for async response
   });

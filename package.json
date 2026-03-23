@@ -5,6 +5,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
+    "build": "node scripts/bundle-content.js",
     "test": "NODE_OPTIONS=--experimental-vm-modules npx jest"
   },
   "keywords": [],

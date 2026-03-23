@@ -16,9 +16,8 @@
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
-      "js": ["lib/picker.js", "content.js"],
-      "run_at": "document_idle",
-      "type": "module"
+      "js": ["lib/picker.browser.js", "content.js"],
+      "run_at": "document_idle"
     }
   ],
   "action": {

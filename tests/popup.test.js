@@ -212,4 +212,60 @@ describe('popup.js', () => {
       expect(document.getElementById('empty-state').hidden).toBe(false);
     });
   });
+
+  describe('hover highlights', () => {
+    it('mouseenter on selector row sends HIGHLIGHT_SELECTOR with row selector', async () => {
+      renderPopup('chatgpt.com', MOCK_CONFIG, 1);
+
+      const rows = document.querySelectorAll('.selector-row');
+      rows[0].dispatchEvent(new MouseEvent('mouseenter', { bubbles: true }));
+
+      // Allow async handler to settle
+      await Promise.resolve();
+
+      expect(chrome.tabs.sendMessage).toHaveBeenCalledWith(
+        1,
+        { type: 'HIGHLIGHT_SELECTOR', selector: '.message-content' }
+      );
+    });
+
+    it('mouseleave on selector row sends CLEAR_HIGHLIGHT', async () => {
+      renderPopup('chatgpt.com', MOCK_CONFIG, 1);
+
+      const rows = document.querySelectorAll('.selector-row');
+      rows[0].dispatchEvent(new MouseEvent('mouseleave', { bubbles: true }));
+
+      await Promise.resolve();
+
+      expect(chrome.tabs.sendMessage).toHaveBeenCalledWith(
+        1,
+        { type: 'CLEAR_HIGHLIGHT' }
+      );
+    });
+
+    it('sendMessage error on mouseenter is silently caught and does not throw', async () => {
+      chrome.tabs.sendMessage.mockRejectedValue(new Error('no receiver'));
+      renderPopup('chatgpt.com', MOCK_CONFIG, 1);
+
+      const rows = document.querySelectorAll('.selector-row');
+      // Should not throw
+      rows[0].dispatchEvent(new MouseEvent('mouseenter', { bubbles: true }));
+      await Promise.resolve();
+      // No assertion needed beyond "did not throw" — test passes if we get here
+    });
+
+    it('window unload event sends CLEAR_HIGHLIGHT message', async () => {
+      // tabId needs to be set — call initPopup or set it via renderPopup
+      renderPopup('chatgpt.com', MOCK_CONFIG, 1);
+
+      window.dispatchEvent(new Event('unload'));
+
+      await Promise.resolve();
+
+      expect(chrome.tabs.sendMessage).toHaveBeenCalledWith(
+        1,
+        { type: 'CLEAR_HIGHLIGHT' }
+      );
+    });
+  });
 });

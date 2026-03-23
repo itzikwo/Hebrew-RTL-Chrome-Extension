@@ -3,7 +3,7 @@
 // Exports handler functions for testability.
 // All DOM mutations go through renderPopup() to keep state consistent.
 
-import { getDomainConfig, setDomainConfig } from '../lib/storage.js';
+import { getDomainConfig, setDomainConfig, getAllConfigs } from '../lib/storage.js';
 
 // Module-level state (set during initPopup, used by event handlers)
 let _hostname = null;
@@ -33,6 +33,13 @@ export async function initPopup() {
   renderPopup(_hostname, _config, _tabId);
 }
 
+// Clear highlights when popup closes (belt-and-suspenders — content.js also has a 5s auto-clear)
+window.addEventListener('unload', () => {
+  if (_tabId) {
+    chrome.tabs.sendMessage(_tabId, { type: 'CLEAR_HIGHLIGHT' }).catch(() => {});
+  }
+});
+
 /**
  * showNotAvailable — shows the not-available state and hides all other controls.
  */
@@ -61,6 +68,11 @@ function showNotAvailable() {
  * @param {number|null} tabId
  */
 export function renderPopup(hostname, config, tabId) {
+  // Keep module-level state in sync (supports tests that call renderPopup directly)
+  _hostname = hostname;
+  _config = config;
+  _tabId = tabId;
+
   // Domain name header
   const domainNameEl = document.getElementById('domain-name');
   if (domainNameEl) domainNameEl.textContent = hostname;
@@ -221,6 +233,18 @@ export function renderSelectorRow(sel, index, config, hostname, tabId) {
     await setDomainConfig(hostname, config);
   });
   row.appendChild(checkbox);
+
+  // Hover: send highlight/clear messages to content script
+  row.addEventListener('mouseenter', async () => {
+    try {
+      await chrome.tabs.sendMessage(tabId, { type: 'HIGHLIGHT_SELECTOR', selector: sel.selector });
+    } catch (_) { /* content script not present — silent no-op */ }
+  });
+  row.addEventListener('mouseleave', async () => {
+    try {
+      await chrome.tabs.sendMessage(tabId, { type: 'CLEAR_HIGHLIGHT' });
+    } catch (_) {}
+  });
 
   // Delete button
   const deleteBtn = document.createElement('button');

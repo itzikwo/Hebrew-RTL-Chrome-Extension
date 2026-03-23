@@ -196,12 +196,25 @@ describe('popup.js', () => {
   });
 
   describe('renderPopup — add selector button', () => {
-    it('clicking add selector button shows coming soon placeholder message', async () => {
+    it('clicking add selector button sends PICKER_ACTIVATE and closes popup', async () => {
+      // Mock window.close to prevent jsdom from destroying the document context
+      const originalClose = window.close;
+      window.close = jest.fn();
+
       renderPopup('chatgpt.com', MOCK_CONFIG, 1);
 
       document.getElementById('add-selector-btn').click();
 
-      expect(document.getElementById('add-selector-msg').hidden).toBe(false);
+      // Allow async sendMessage to settle
+      await Promise.resolve();
+
+      expect(chrome.tabs.sendMessage).toHaveBeenCalledWith(
+        1,
+        { type: 'PICKER_ACTIVATE', hostname: 'chatgpt.com' }
+      );
+      expect(window.close).toHaveBeenCalled();
+
+      window.close = originalClose;
     });
   });
 

@@ -116,17 +116,16 @@ export function renderPopup(hostname, config, tabId) {
     }
   }
 
-  // Add Selector button handler
+  // Add Selector button handler — activates picker mode on the page
   const addBtn = document.getElementById('add-selector-btn');
   if (addBtn) {
     const newAddBtn = addBtn.cloneNode(true);
     addBtn.parentNode.replaceChild(newAddBtn, addBtn);
-    newAddBtn.addEventListener('click', () => {
-      const msg = document.getElementById('add-selector-msg');
-      if (msg) {
-        msg.hidden = false;
-        setTimeout(() => { msg.hidden = true; }, 3000);
-      }
+    newAddBtn.addEventListener('click', async () => {
+      try {
+        await chrome.tabs.sendMessage(_tabId, { type: 'PICKER_ACTIVATE', hostname: _hostname });
+      } catch (_) { /* content script not present on this tab (e.g. chrome:// pages) */ }
+      window.close();
     });
   }
 

@@ -246,6 +246,16 @@ if (typeof chrome !== 'undefined') {
     }
   });
 
+  // Auto-reset picker when tab becomes hidden (e.g. popup opens over the tab)
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden && typeof window._hrtlPicker !== 'undefined') {
+      const state = window._hrtlPicker.getPickerState();
+      if (state !== window._hrtlPicker.PICKER_STATE.INACTIVE) {
+        window._hrtlPicker.pickerReset();
+      }
+    }
+  });
+
   // Handle keyboard shortcut toggle from background.js
   let _highlightTimer = null;
   chrome.runtime.onMessage.addListener((msg, _sender, sendResponse) => {
@@ -290,6 +300,18 @@ if (typeof chrome !== 'undefined') {
         el.style.outline = '';
         el.removeAttribute('data-hrtl-highlight');
       });
+      sendResponse({ ok: true });
+    }
+    if (msg.type === 'PICKER_ACTIVATE') {
+      if (typeof window._hrtlPicker !== 'undefined') {
+        window._hrtlPicker.pickerActivate(msg.hostname);
+      }
+      sendResponse({ ok: true });
+    }
+    if (msg.type === 'PICKER_DEACTIVATE') {
+      if (typeof window._hrtlPicker !== 'undefined') {
+        window._hrtlPicker.pickerReset();
+      }
       sendResponse({ ok: true });
     }
     return true; // Keep message channel open for async response

@@ -224,6 +224,60 @@ async function init() {
   startObserver(selectorString, buildSelectorConfig(_config.selectors));
 }
 
+// ---- Toast (for keyboard-shortcut feedback) ----
+// Minimal shadow-DOM toast that auto-dismisses. Reused host so rapid
+// toggles replace the previous message instead of stacking.
+let _toastHost = null;
+let _toastTimer = null;
+
+function showToast(message) {
+  if (typeof document === 'undefined' || !document.body) return;
+  if (!_toastHost) {
+    _toastHost = document.createElement('div');
+    _toastHost.id = 'hrtl-toast-host';
+    document.body.appendChild(_toastHost);
+    const shadow = _toastHost.attachShadow({ mode: 'open' });
+    const style = document.createElement('style');
+    style.textContent = `
+      .hrtl-toast {
+        position: fixed;
+        bottom: 24px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: #111827;
+        color: #FFFFFF;
+        font: 13px/1.4 system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        padding: 8px 16px;
+        border-radius: 6px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        z-index: 2147483647;
+        opacity: 0;
+        transition: opacity 150ms ease;
+        pointer-events: none;
+      }
+      .hrtl-toast.visible { opacity: 1; }
+    `;
+    const toast = document.createElement('div');
+    toast.className = 'hrtl-toast';
+    toast.setAttribute('role', 'status');
+    toast.setAttribute('aria-live', 'polite');
+    shadow.appendChild(style);
+    shadow.appendChild(toast);
+  }
+  const toast = _toastHost.shadowRoot.querySelector('.hrtl-toast');
+  toast.textContent = message;
+  // Force reflow, then add visible class for fade-in
+  void toast.offsetWidth;
+  toast.classList.add('visible');
+  clearTimeout(_toastTimer);
+  _toastTimer = setTimeout(() => {
+    toast.classList.remove('visible');
+    _toastTimer = setTimeout(() => {
+      if (_toastHost) { _toastHost.remove(); _toastHost = null; }
+    }, 200);
+  }, 1600);
+}
+
 // Guard chrome API calls so Jest imports of content.js do not throw when
 // chrome is undefined (content.test.js and mutation.test.js set up no chrome mock).
 if (typeof chrome !== 'undefined') {
@@ -264,8 +318,10 @@ if (typeof chrome !== 'undefined') {
       chrome.storage.sync.get(key).then(data => {
         const config = data[key] ?? { enabled: false, selectors: [], loadDelay: 0 };
         config.enabled = !config.enabled;
+        const done = () => showToast(`Hebrew RTL: ${config.enabled ? 'on' : 'off'}`);
         chrome.storage.sync.set({ [key]: config })
-          .catch(() => chrome.storage.local.set({ [key]: config }));
+          .then(done)
+          .catch(() => chrome.storage.local.set({ [key]: config }).then(done));
       });
       sendResponse({ toggled: true });
     }
@@ -311,7 +367,7 @@ if (typeof chrome !== 'undefined') {
     }
     if (msg.type === 'PICKER_ACTIVATE') {
       if (typeof window._hrtlPicker !== 'undefined') {
-        window._hrtlPicker.pickerActivate(msg.hostname);
+        window._hrtlPicker.pickerActivate(msg.hostname, msg.editIndex);
       }
       sendResponse({ ok: true });
     }

@@ -351,6 +351,26 @@ export function renderSelectorRow(sel, index, config, hostname, tabId) {
     } catch (_) {}
   });
 
+  // Edit / re-pick button — activates picker with editIndex so Save
+  // replaces this row instead of appending.
+  const editBtn = document.createElement('button');
+  editBtn.className = 'edit-btn';
+  editBtn.textContent = '✎';
+  editBtn.title = 'Re-pick element';
+  editBtn.setAttribute('aria-label', 'Re-pick element');
+  editBtn.addEventListener('click', async (e) => {
+    e.stopPropagation();
+    try {
+      await chrome.tabs.sendMessage(tabId, {
+        type: 'PICKER_ACTIVATE',
+        hostname,
+        editIndex: index,
+      });
+    } catch (_) { /* content script not present */ }
+    window.close();
+  });
+  row.appendChild(editBtn);
+
   // Delete button
   const deleteBtn = document.createElement('button');
   deleteBtn.className = 'delete-btn';

@@ -126,6 +126,19 @@
       min-width: 0;
     }
 
+    .selector-count {
+      font-size: 11px;
+      color: #6B7280;
+      flex-shrink: 0;
+      font-variant-numeric: tabular-nums;
+      min-width: 20px;
+      text-align: right;
+    }
+
+    .selector-count--zero {
+      color: #DC2626;
+    }
+
     .selector-row input[type="checkbox"] {
       flex-shrink: 0;
       cursor: pointer;
@@ -328,8 +341,8 @@
   <!-- Header: domain name + master toggle -->
   <header>
     <span id="domain-name">loading...</span>
-    <label class="toggle">
-      <input type="checkbox" id="master-toggle">
+    <label class="toggle" title="Toggle Hebrew RTL correction for this site">
+      <input type="checkbox" id="master-toggle" aria-label="Toggle Hebrew RTL correction for this site">
       <span class="toggle-slider"></span>
     </label>
   </header>
@@ -343,8 +356,8 @@
   <!-- Empty state (shown when selectors array is empty) -->
   <p id="empty-state" hidden>No selectors configured — add one with +</p>
 
-  <!-- Add selector message (shown on + click, auto-hides after 3s) -->
-  <p id="add-selector-msg" hidden>Coming soon — element picker in next update</p>
+  <!-- Hidden file input for import -->
+  <input type="file" id="import-file-input" accept="application/json,.json" hidden>
 
   <!-- Footer: Add Selector + Actions -->
   <footer>
@@ -353,6 +366,7 @@
       <button id="actions-btn">Actions &#9662;</button>
       <ul id="actions-menu" hidden>
         <li><button data-action="export">Export Config</button></li>
+        <li><button data-action="import">Import Config</button></li>
         <li><button data-action="delete-all">Delete All Selectors</button></li>
         <li><button data-action="shortcuts">Keyboard Shortcuts</button></li>
         <li><button data-action="help">Help</button></li>

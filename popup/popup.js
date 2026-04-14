@@ -5,6 +5,24 @@
 
 import { getDomainConfig, setDomainConfig, getAllConfigs } from '../lib/storage.js';
 
+/**
+ * fetchSelectorCounts — asks the content script how many elements each selector matches.
+ * Returns an array of counts aligned with selectors; -1 means invalid selector,
+ * null means content script unavailable (e.g. chrome:// pages).
+ */
+async function fetchSelectorCounts(tabId, selectors) {
+  if (!tabId || !selectors?.length) return [];
+  try {
+    const resp = await chrome.tabs.sendMessage(tabId, {
+      type: 'COUNT_SELECTORS',
+      selectors: selectors.map(s => s.selector),
+    });
+    return resp?.counts ?? selectors.map(() => null);
+  } catch (_) {
+    return selectors.map(() => null);
+  }
+}
+
 // Module-level state (set during initPopup, used by event handlers)
 let _hostname = null;
 let _config = null;
@@ -113,6 +131,27 @@ export function renderPopup(hostname, config, tabId) {
       config.selectors.forEach((sel, index) => {
         renderSelectorRow(sel, index, config, hostname, tabId);
       });
+      // Async: fetch match counts from content script and populate .selector-count spans
+      fetchSelectorCounts(tabId, config.selectors).then(counts => {
+        const rows = selectorList.querySelectorAll('.selector-row');
+        counts.forEach((count, i) => {
+          const row = rows[i];
+          if (!row) return;
+          const countEl = row.querySelector('.selector-count');
+          if (!countEl) return;
+          if (count === null) {
+            countEl.textContent = '';
+          } else if (count === -1) {
+            countEl.textContent = '!';
+            countEl.title = 'Invalid selector';
+            countEl.classList.add('selector-count--zero');
+          } else {
+            countEl.textContent = String(count);
+            countEl.title = `${count} element${count === 1 ? '' : 's'} match on this page`;
+            countEl.classList.toggle('selector-count--zero', count === 0);
+          }
+        });
+      });
     }
   }
 
@@ -156,6 +195,41 @@ export function renderPopup(hostname, config, tabId) {
       a.download = `hebrew-rtl-config-${date}.json`;
       a.click();
       URL.revokeObjectURL(url);
+    });
+  }
+
+  const importBtn = document.querySelector('[data-action="import"]');
+  const importInput = document.getElementById('import-file-input');
+  if (importBtn && importInput) {
+    importBtn.addEventListener('click', () => {
+      if (actionsMenu) actionsMenu.hidden = true;
+      importInput.value = '';
+      importInput.click();
+    });
+    importInput.addEventListener('change', async () => {
+      const file = importInput.files?.[0];
+      if (!file) return;
+      try {
+        const text = await file.text();
+        const parsed = JSON.parse(text);
+        // Expect object keyed by "domains.<hostname>"; validate shape and merge.
+        const entries = Object.entries(parsed).filter(
+          ([k, v]) => k.startsWith('domains.') && v && typeof v === 'object' && Array.isArray(v.selectors)
+        );
+        if (entries.length === 0) {
+          alert('No valid domain configs found in file.');
+          return;
+        }
+        for (const [key, value] of entries) {
+          const host = key.slice('domains.'.length);
+          await setDomainConfig(host, value);
+        }
+        // Reload current domain's config and re-render
+        _config = await getDomainConfig(_hostname) ?? { enabled: false, selectors: [], loadDelay: 0 };
+        renderPopup(_hostname, _config, _tabId);
+      } catch (e) {
+        alert(`Import failed: ${e.message}`);
+      }
     });
   }
 
@@ -241,12 +315,19 @@ export function renderSelectorRow(sel, index, config, hostname, tabId) {
   const row = document.createElement('div');
   row.className = 'selector-row';
 
-  // Selector text
+  // Selector text — prefer friendly label, fall back to raw CSS.
+  // Full CSS selector is always shown in the tooltip.
   const span = document.createElement('span');
   span.className = 'selector-text';
-  span.textContent = sel.selector;
-  span.title = sel.selector;
+  span.textContent = sel.label || sel.selector;
+  span.title = sel.label ? `${sel.label}\n${sel.selector}` : sel.selector;
   row.appendChild(span);
+
+  // Match count (populated async after render by fetchSelectorCounts)
+  const count = document.createElement('span');
+  count.className = 'selector-count';
+  count.setAttribute('aria-label', 'Match count');
+  row.appendChild(count);
 
   // Enable/disable checkbox
   const checkbox = document.createElement('input');

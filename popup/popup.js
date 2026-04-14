@@ -315,11 +315,12 @@ export function renderSelectorRow(sel, index, config, hostname, tabId) {
   const row = document.createElement('div');
   row.className = 'selector-row';
 
-  // Selector text
+  // Selector text — prefer friendly label, fall back to raw CSS.
+  // Full CSS selector is always shown in the tooltip.
   const span = document.createElement('span');
   span.className = 'selector-text';
-  span.textContent = sel.selector;
-  span.title = sel.selector;
+  span.textContent = sel.label || sel.selector;
+  span.title = sel.label ? `${sel.label}\n${sel.selector}` : sel.selector;
   row.appendChild(span);
 
   // Match count (populated async after render by fetchSelectorCounts)

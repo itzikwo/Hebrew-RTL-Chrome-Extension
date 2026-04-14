@@ -302,6 +302,13 @@ if (typeof chrome !== 'undefined') {
       });
       sendResponse({ ok: true });
     }
+    if (msg.type === 'COUNT_SELECTORS') {
+      const counts = (msg.selectors || []).map(s => {
+        try { return document.querySelectorAll(s).length; }
+        catch (_) { return -1; /* invalid selector */ }
+      });
+      sendResponse({ counts });
+    }
     if (msg.type === 'PICKER_ACTIVATE') {
       if (typeof window._hrtlPicker !== 'undefined') {
         window._hrtlPicker.pickerActivate(msg.hostname);

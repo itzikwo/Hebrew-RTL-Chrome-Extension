@@ -14,6 +14,7 @@ Most English-first websites don't handle Hebrew properly — paragraphs align le
 - **Keyboard shortcut** — `Ctrl+Shift+H` / `⌃⇧H` to toggle on/off instantly
 - **Syncs across devices** — configuration saved to Chrome sync storage
 - **Streaming support** — re-evaluates direction as AI responses stream in
+- **Import / export** — back up your full configuration as JSON or restore it on another machine
 
 ## Pre-configured sites
 
@@ -57,8 +58,12 @@ Navigate to ChatGPT, Claude, Gemini, NotebookLM, or Slack — RTL correction app
 ### Managing selectors
 - **Master toggle** — enable/disable all RTL corrections for the current domain
 - **Per-selector toggle** — enable/disable individual selectors
+- **Friendly labels** — each saved selector is tagged with a human-readable label (element tag + text snippet) instead of raw CSS
+- **Live match count** — each row shows how many elements currently match on the page; red when zero or invalid
+- **Re-pick (✎)** — replace a selector's target without losing its enabled / forceRTL settings
 - **Hover a selector row** — highlights matching elements on the page in blue
-- **Actions menu** — export config, delete all selectors, keyboard shortcuts, help
+- **On-page toast** — the `Ctrl+Shift+H` shortcut shows a brief confirmation on the page so you know it fired
+- **Actions menu** — export / import config, delete all selectors, keyboard shortcuts, help
 
 ## How it works
 

@@ -367,7 +367,7 @@ if (typeof chrome !== 'undefined') {
     }
     if (msg.type === 'PICKER_ACTIVATE') {
       if (typeof window._hrtlPicker !== 'undefined') {
-        window._hrtlPicker.pickerActivate(msg.hostname);
+        window._hrtlPicker.pickerActivate(msg.hostname, msg.editIndex);
       }
       sendResponse({ ok: true });
     }
